@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 
 // Login
 Route::get('/', function () {
@@ -8,17 +9,36 @@ Route::get('/', function () {
 });
 
 // Dashboard
+// Route::get('/dashboard-admin', function () {
+//     return view('admin.dashboardAdmin');
+// });
+
 Route::get('/dashboard-admin', function () {
     return view('admin.dashboardAdmin');
-});
+})->middleware('role:admin');
+
 Route::get('/log-activity', function () {
     return view('admin.logActivity');
 });
 Route::get('/manage-ukm-admin', function () {
     return view('admin.manageUKM');
 });
-Route::get('/manage-user', function () {
-    return view('admin.manageUser');
+// Route::get('/manage-user', function () {
+//     return view('admin.manageUser');
+// });
+// Route::get('/manage-user', [RoleController::class, 'index'])->name('manageUser');
+
+// change route to resources 
+
+// CRUD USER
+Route::controller(RoleController::class)->prefix('manageUser')->group(function () {
+    Route::get('', 'index')->name('roles');
+    Route::get('create', 'create')->name('roles.create');
+    Route::post('store', 'store')->name('roles.store');
+    Route::get('show/{id}', 'show')->name('roles.show');
+    Route::get('edit/{id}', 'edit')->name('roles.edit');
+    Route::put('edit/{id}', 'update')->name('roles.update');
+    Route::delete('destroy/{id}', 'destroy')->name('roles.destroy');
 });
 
 
@@ -38,12 +58,12 @@ Route::get('/dashboard-kominfo', function () {
 
 // Kopma
 Route::get('/dashboard-kopma', function () {
-    return view('kopma.dashboardKopma');
+    return view('kopma.penjualanKopma');
 });
 
 // Mahasiswa
 Route::get('/home', function () {
-    return view('mahasiswa.dashboardMahasiswa');
+    return view('mahasiswa.homeMahasiswa');
 });
 
 
