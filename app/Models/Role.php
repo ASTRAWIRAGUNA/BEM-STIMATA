@@ -9,10 +9,17 @@ class Role extends Model
 {
     use HasFactory;
 
+     // untuk memproteksi field id
+     protected $guarded = ['id'];
 
-    protected $fillable = [
-        'nama',
-        'nim',
-        'role_type'
-    ];
+     // untuk relasi one To Many
+     public function users() {
+         return $this->hasMany(User::class,'role_id');
+     }
+     
+    // protected $fillable = [
+    //     'nama',
+    //     'nim',
+    //     'role_type'
+    // ];
 }

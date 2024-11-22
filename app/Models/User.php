@@ -9,23 +9,29 @@ use Illuminate\Notifications\Notifiable;
 
 
 
+
+
 class User extends Authenticatable
 {
-    use Notifiable;
-
-    public function hasRole($role)
-    {
-        return $this->role === $role;
-    }
-
+    use HasFactory,Notifiable;
     
     protected $fillable = [
-        'nim', 'nama', 'password', 'role',
+        'name', 'nim', 'password', 'email',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+
+    // inverse one to Many ke tabel role
+    public function role() {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 
     // public function logActivities()
     // {

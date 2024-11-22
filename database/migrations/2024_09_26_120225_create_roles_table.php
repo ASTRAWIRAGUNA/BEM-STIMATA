@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('nim');
-            $table->enum('role_type', ['admin', 'sekretaris', 'user'])->default('user'); // Kolom peran
+            $table->string('role_name')->unique();
+            // $table->string('nim');
+            // $table->enum('role_type', ['admin', 'sekretaris', 'user']); // Kolom peran
             $table->timestamps();
         });
     }

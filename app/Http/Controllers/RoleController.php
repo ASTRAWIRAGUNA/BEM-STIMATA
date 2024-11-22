@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -12,9 +13,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $role = Role::orderBy('created_at', 'DESC')->get();
+        $users = User::orderBy('created_at', 'DESC')->get();
+        $users = User::with('role')->get();
         
-        return view('admin.manageUser',compact('role'));
+        return view('admin.manageUser',compact('users'));
     }
 
     /**
@@ -42,11 +44,13 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show( $id)
     {
-        $role = Role::findOrFail($id);
-  
-        return view('roles.show', compact('role'));
+         // Ambil data user berdasarkan ID dengan relasi role
+        $user = User::with('role')->findOrFail($id);
+        // $role = Role::findOrFail($id);
+        
+        return view('roles.show', compact('user'));
     }
 
     /**
@@ -85,6 +89,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
   
         $role->delete();
+        $role->users()->delete(); // Menghapus semua user yang memiliki role_id ini
   
         return redirect()->route('roles')->with('success', 'user deleted successfully');
     }

@@ -11,6 +11,10 @@
                 <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
                 <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
                 <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="block px-4 py-2 account-link hover:text-white">Logout</button>
+                </form>
             </div>
         </div>
     </header>

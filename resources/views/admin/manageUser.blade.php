@@ -55,18 +55,18 @@
                                 </tr>
                             
                             <tbody>
-                               @if($role->count() > 0)
-                                @foreach($role as $rs)
+                               @if($users->count() > 0)
+                                @foreach($users as $user)
                                         <tr>
                                             <td class="align-middle">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $rs->nama }}</td>
-                                            <td class="align-middle">{{ $rs->nim }}</td>  
-                                            <td class="align-middle">{{ $rs->role_type }}</td>  
+                                            <td class="align-middle">{{ $user->name }}</td>
+                                            <td class="align-middle">{{ $user->nim }}</td>  
+                                            <td class="align-middle">{{ $user->role->role_name ?? 'role gaonok' }}</td>  
                                             <td class="align-middle">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('roles.show', $rs->id) }}" type="button" class="btn btn-secondary">Detail</a>
-                                                    <a href="{{ route('roles.edit', $rs->id)}}" type="button" class="btn btn-warning">Edit</a>
-                                                    <form action="{{ route('roles.destroy', $rs->id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')">
+                                                    <a href="{{ route('roles.show', $user->role_id) }}" type="button" class="btn btn-secondary">Detail</a>
+                                                    <a href="{{ route('roles.edit', $user->role_id)}}" type="button" class="btn btn-warning">Edit</a>
+                                                    <form action="{{ route('roles.destroy', $user->role_id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger m-0">Delete</button>

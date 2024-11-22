@@ -30,30 +30,25 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $role->nama }}" readonly>
+                        <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $user->name }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">NIM</label>
-                        <input type="text" name="nim" class="form-control" placeholder="NIM" value="{{ $role->nim }}" readonly>
+                        <input type="text" name="nim" class="form-control" placeholder="NIM" value="{{ $user->nim }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Role</label>
-                        <input type="text" name="role_type" class="form-control" placeholder="Role" value="{{ $role->role_type }}" readonly>
+                        <input type="text" name="role_type" class="form-control" placeholder="Role" value="{{ $user->role->role_name ?? 'role gaonok'}}" readonly>
                     </div>
-                </div>
-                
-                <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Created At</label>
-                        <input type="text" name="created_at" class="form-control" placeholder="Created At" value="{{ $role->created_at }}" readonly>
+                        <input type="text" name="created_at" class="form-control" placeholder="Created At" value="{{ $user->created_at }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Updated At</label>
-                        <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $role->updated_at }}" readonly>
+                        <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $user->updated_at }}" readonly>
                     </div>
                 </div>
-
-               
             </main>
         </div>
     </div>
