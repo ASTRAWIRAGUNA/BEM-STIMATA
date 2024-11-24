@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //$middleware->append(RoleMiddleware::class);
         $middleware->alias([
             'checkrole' => CheckRole::class,
-            'verifyrole' => VerifyUserRole::class,
+            // 'verifyrole' => VerifyUserRole::class,
         ]);
         
     })

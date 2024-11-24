@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Spatie\Activitylog\Models\Activity;
+
 
 class AuthController extends Controller
 {
-    public function login() {
+    public function showLoginForm()
+    {
         return view('login');
     }
 
@@ -28,41 +32,49 @@ class AuthController extends Controller
     // }
 
 
-    public function dologin(Request $request) {
-        // validasi
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
-            // 'email' => 'required|email',
-            'nim' => 'required|string',
-            'password' => 'required'
+            'nim' => 'required',
+            'password' => 'required',
         ]);
 
-        if (auth()->attempt($credentials)) {
+        $user = User::where('nim', $credentials['nim'])->first();
 
-            // buat ulang session login
-            $request->session()->regenerate();
-
-            if (auth()->user()->role_id === 1) {
-                // jika user admin
-                return redirect()->intended('/dashboardAdmin');
-            } if(auth()->user()->role_id === 3){
-                return redirect()->intended('/dashboardSekretaris');
-            } if(auth()->user()->role_id === 4){
-                return redirect()->intended('/dashboardKominfo');
-            } else {
-                // jika user bendahara
-                return redirect()->intended('/dashboardBendahara');
-            }
+        if (!$user) {
+            // Jika user tidak ditemukan di database
+            return back()->withErrors(['nim' => 'Akun dengan NIM ini tidak terdaftar di sistem.']);
+        }
+    
+        if (!Hash::check($credentials['password'], $user->password)) {
+            // Jika password salah
+            return back()->withErrors(['password' => 'Password yang dimasukkan salah.']);
+        }
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user);
+            return redirect()->route('dashboard');
         }
 
-        // jika email atau password salah
-        // kirimkan session error
-        return back()->with('error', 'nim atau password salah');
+        
+
+        //     // Pencatatan aktivitas login
+        // activity()
+        // ->causedBy(Auth::user()) // Pengguna yang menyebabkan aktivitas
+        // ->log('User logged in'); // Pesan log aktivitas
+        // return back()->withErrors(['password' => 'Akun tidak terdaftar']);
     }
+    // public function log(User $user){
+    //     return view('logactivity.logActivity',[
+    //         'logs' => Activity::where('subject_type',User::class)->where('subject_id',$user->id)->latest()->get()
+    //     ]);
+    // }
 
     public function logout(Request $request) {
-        auth()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+        // auth()->logout();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
+        // return redirect('/');
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

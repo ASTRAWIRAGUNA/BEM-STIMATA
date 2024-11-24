@@ -3,35 +3,44 @@
 // app/Models/User.php
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
-
-
 
 
 class User extends Authenticatable
 {
-    use HasFactory,Notifiable;
+    use HasFactory,Notifiable,LogsActivity;
     
+    protected $primaryKey = 'user_id';
     protected $fillable = [
-        'name', 'nim', 'password', 'email',
+        'nama','nim',  'password', 'role',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'nim', 'role']) // Kolom yang dicatat
+            ->useLogName('user_activity') // Nama log (opsional)
+            ->logOnlyDirty(); // Hanya mencatat perubahan
+    }
+    
+
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 
 
     // inverse one to Many ke tabel role
-    public function role() {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
+    // public function role() {
+    //     return $this->belongsTo(Role::class, 'role_id');
+    // }
 
     // public function logActivities()
     // {

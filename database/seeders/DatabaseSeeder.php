@@ -15,21 +15,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
-            'role_name' => 'admin',
-        ]);
-
-        Role::create([
-            'role_name' => 'bendahara',
-        ]);
-        Role::create([
-            'role_name' => 'sekretaris',
-        ]);
-        Role::create([
-            'role_name' => 'kominfo',
-        ]);
-        
-        User::factory(5)->create();
+        $users = [
+            [
+                'nama' => 'Admin BEM',
+                'nim' => '22.31.0001',
+                // 'username' => '22.31.0001',
+                'password' => Hash::make('admin'),
+                'role' => 'Admin',
+            ],
+            [
+                'nama' => 'Sekretaris BEM',
+                'nim' => '22.31.0002',
+                // 'username' => '22.31.0002',
+                'password' => Hash::make('sekretaris'),
+                'role' => 'Sekretaris',
+            ],
+            [
+                'nama' => 'Bendahara BEM',
+                'nim' => '22.31.0003',
+                // 'username' => '22.31.0003',
+                'password' => Hash::make('bendahara'),
+                'role' => 'Bendahara',
+            ],
+            [
+                'nama' => 'Kominfo BEM',
+                'nim' => '22.31.0004',
+                // 'username' => '22.31.0004',
+                'password' => Hash::make('kominfo'),
+                'role' => 'Kominfo',
+            ],
+        ];
+        foreach ($users as $user) {
+            User::create($user);
+        }
 
     }
         // User::create([

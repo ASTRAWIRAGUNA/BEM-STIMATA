@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KominfoController;
@@ -16,37 +19,76 @@ Route::get('/', function ()  {
 
 //  jika user belum login
 Route::group(['middleware' => 'guest'], function() {
-    Route::get('/', [AuthController::class, 'login'])->name('login');
-    Route::post('/', [AuthController::class, 'dologin']);
+    Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/', [AuthController::class, 'login']);
+    
 
+});
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::middleware('checkrole:Admin')->group(function () {
+        // Routes khusus untuk Admin
+
+        //route manageuser
+        Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
+        Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
+        Route::post('/manageuser', [UserController::class, 'store'])->name('manageuser.store');
+        Route::get('/manageuser/{id}/edit', [UserController::class, 'edit'])->name('manageuser.edit');
+        Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
+        Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
+        Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
+        //route logact
+        // Route::get('/logactivity', [AuthController::class, 'log'])->name('logactivity');
+        // Route::get('/logactivity', [UserController::class, 'log'])->name('logactivity');
+        Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
+    });
+
+    Route::middleware('role:Sekretaris')->group(function () {
+        // Routes khusus untuk Sekretaris
+    });
+
+    Route::middleware('role:Bendahara')->group(function () {
+        // Routes khusus untuk Bendahara
+    });
+
+    Route::middleware('role:Kominfo')->group(function () {
+        // Routes khusus untuk Kominfo
+    });
 });
 
 // untuk admin,bendahara,sekretaris dan kominfo 
-Route::group(['middleware' => ['auth','verifyrole', 'checkrole:1,2,3,4']], function() {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/redirect', [RedirectController::class, 'cek']);
-});
+// Route::group(['middleware' => ['auth','verifyrole', 'checkrole:1,2,3,4']], function() {
+//     Route::post('/logout', [AuthController::class, 'logout']);
+//     Route::get('/redirect', [RedirectController::class, 'cek']);
+// });
 
 // untuk superadmin
-Route::group(['middleware' => ['auth', 'verifyrole','checkrole:1']], function() {
-    Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('admin');
-});
+// Route::group(['middleware' => ['auth', 'verifyrole','checkrole:1']], function() {
+//     Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('admin');
+// });
 
-// untuk bendahara
-Route::group(['middleware' => ['auth', 'verifyrole','checkrole:2']], function() {
-    Route::get('/dashboardBendahara', [BendaharaController::class, 'index']);
+// // untuk bendahara
+// Route::group(['middleware' => ['auth', 'verifyrole','checkrole:2']], function() {
+//     Route::get('/dashboardBendahara', [BendaharaController::class, 'index']);
 
-});
-// untuk bendahara
-Route::group(['middleware' => ['auth','verifyrole', 'checkrole:3']], function() {
-    Route::get('/dashboardSekretaris', [SekretarisController::class, 'index']);
+// });
+// // untuk bendahara
+// Route::group(['middleware' => ['auth','verifyrole', 'checkrole:3']], function() {
+//     Route::get('/dashboardSekretaris', [SekretarisController::class, 'index']);
 
-});
-// untuk bendahara
-Route::group(['middleware' => ['auth','verifyrole', 'checkrole:4']], function() {
-    Route::get('/dashboardKominfo', [KominfoController::class, 'index']);
+// });
+// // untuk bendahara
+// Route::group(['middleware' => ['auth','verifyrole', 'checkrole:4']], function() {
+//     Route::get('/dashboardKominfo', [KominfoController::class, 'index']);
 
-});
+// });
 // Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 // Route::post('/login', [LoginController::class, 'login']);
 
@@ -67,21 +109,24 @@ Route::get('/manage-ukm-admin', function () {
 });
 // Route::get('/manage-user', function () {
 //     return view('admin.manageUser');
-// });
+// })->name('user');
 // Route::get('/manage-user', [RoleController::class, 'index'])->name('manageUser');
 
 // change route to resources 
 
 // CRUD USER
-Route::controller(RoleController::class)->prefix('manageUser')->group(function () {
-    Route::get('', 'index')->name('roles');
-    Route::get('create', 'create')->name('roles.create');
-    Route::post('store', 'store')->name('roles.store');
-    Route::get('show/{id}', 'show')->name('roles.show');
-    Route::get('edit/{id}', 'edit')->name('roles.edit');
-    Route::put('edit/{id}', 'update')->name('roles.update');
-    Route::delete('destroy/{id}', 'destroy')->name('roles.destroy');
-});
+
+
+// Route::middleware(['auth', 'role:Admin'])->group(function () {
+//     Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
+//     Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
+//     Route::post('/manageuser', [UserController::class, 'store'])->name('manageuser.store');
+//     Route::get('/manageuser/{id}/edit', [UserController::class, 'edit'])->name('manageuser.edit');
+//     Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
+//     Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
+//     Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
+// });
+
 
 
 // Bendahara

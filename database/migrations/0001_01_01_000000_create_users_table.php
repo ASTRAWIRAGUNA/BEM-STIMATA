@@ -10,16 +10,13 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('nim');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            // tambahan untuk role id ditable role
-            $table->unsignedBigInteger('role_id');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->id('user_id'); // Primary Key
+            $table->string('nama'); // Kolom nama
+            $table->string('nim')->unique(); // Kolom NIM
+            // $table->string('username')->unique(); // Kolom username
+            $table->string('password'); // Kolom password
+            $table->enum('role', ['Admin', 'Sekretaris', 'Bendahara', 'Kominfo']); // Role
+            $table->timestamps(); // Created_at and Updated_at
         });
 
         //after clone tambahkan skema ini

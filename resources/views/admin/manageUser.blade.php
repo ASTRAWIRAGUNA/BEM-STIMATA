@@ -33,15 +33,13 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List User
                         </p>
-                        <a href="{{ route('roles.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                        <a href="{{ route('manageuser.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
                             <i class="ri-add-line mr-3 text-lg"></i> Add User
                         </a>
                     </div>
-                    @if(Session::has('success'))
-                    <div class="alert alert-success" role="alert">
-                        {{ Session::get('success') }}
-                    </div>
-                    @endif
+                    @if (session('success'))
+                        <p style="color: green;">{{ session('success') }}</p>
+                        @endif
 
                     <div class="bg-white overflow-auto">
                         <table class="min-w-full bg-white">
@@ -54,33 +52,25 @@
                                     <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
                                 </tr>
                             
-                            <tbody>
-                               @if($users->count() > 0)
-                                @foreach($users as $user)
+                                <tbody>
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <td class="align-middle">{{ $loop->iteration }}</td>
-                                            <td class="align-middle">{{ $user->name }}</td>
-                                            <td class="align-middle">{{ $user->nim }}</td>  
-                                            <td class="align-middle">{{ $user->role->role_name ?? 'role gaonok' }}</td>  
-                                            <td class="align-middle">
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <a href="{{ route('roles.show', $user->role_id) }}" type="button" class="btn btn-secondary">Detail</a>
-                                                    <a href="{{ route('roles.edit', $user->role_id)}}" type="button" class="btn btn-warning">Edit</a>
-                                                    <form action="{{ route('roles.destroy', $user->role_id) }}" method="POST" type="button" class="btn btn-danger p-0" onsubmit="return confirm('Delete?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger m-0">Delete</button>
-                                                    </form>
-                                                </div>
+                                            <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
+                                            <td class="text-center py-3 px-4">{{ $user->nama }}</td>
+                                            <td class="text-center py-3 px-4">{{ $user->nim }}</td>
+                                            <td class="text-center py-3 px-4">{{ $user->role }}</td>
+                                            <td>
+                                                <a href="{{ route('manageuser.show', $user->user_id) }}">Detail</a>
+                                                <a href="{{ route('manageuser.edit', $user->user_id) }}">Edit</a>
+                                                <form action="{{ route('manageuser.destroy', $user->user_id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Hapus user ini?')">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
-                                    @else
-                                    <tr>
-                                        <td class="text-center" colspan="5">User not found</td>
-                                    </tr>
-                                @endif            
-                            </tbody>
+                                </tbody>
                             
                         </table>
                     </div>

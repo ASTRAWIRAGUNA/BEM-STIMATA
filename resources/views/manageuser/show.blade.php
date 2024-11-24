@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $user->name }}" readonly>
+                        <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $user->nama }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">NIM</label>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Role</label>
-                        <input type="text" name="role_type" class="form-control" placeholder="Role" value="{{ $user->role->role_name ?? 'role gaonok'}}" readonly>
+                        <input type="text" name="role" class="form-control" placeholder="Role" value="{{ $user->role}}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Created At</label>

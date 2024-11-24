@@ -6,19 +6,19 @@
         </button>
     </div>
     <nav class="text-white text-base font-semibold pt-3">
-        <a href="{{ route('admin') }}" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+        <a href="" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
             <i class="fas fa-tachometer-alt mr-3"></i>
             Dashboard
         </a>
-        <a href="{{ route('roles') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        <a href="{{ route('manageuser') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
             <i class="fas fa-sticky-note mr-3"></i>
             Manage User
         </a>
-        <a href="/manage-ukm-admin" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        {{-- <a href="/manage-ukm-admin" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
             <i class="fas fa-sticky-note mr-3"></i>
             Manage UKM
-        </a>
-        <a href="/log-activity" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+        </a> --}}
+        <a href="{{ route('logactivity') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
             <i class="fas fa-table mr-3"></i>
             Log Activity
         </a>
