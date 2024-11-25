@@ -48,7 +48,8 @@ class LogLogoutActivity
             ->tap(function ($activity) {
                 $activity->log_name = 'logout_activity'; // Nama log
                  })
-            ->log('User logged out');
+            ->withProperties(['role' => $user->role])
+            ->log("{$user->role} logged out");
         } else {
         Log::warning('User casting failed on logout.');
         }

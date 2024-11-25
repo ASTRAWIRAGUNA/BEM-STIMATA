@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     use HasFactory,Notifiable,LogsActivity;
     
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'nama','nim',  'password', 'role',
     ];
@@ -26,7 +26,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'nim', 'role']) // Kolom yang dicatat
+            ->logOnly(['nama', 'nim', 'role']) // Kolom yang dicatat
             ->useLogName('user_activity') // Nama log (opsional)
             ->logOnlyDirty(); // Hanya mencatat perubahan
     }

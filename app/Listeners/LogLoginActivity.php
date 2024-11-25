@@ -32,11 +32,13 @@ class LogLoginActivity
             Log::info('User successfully cast to model: ' . $user->nim);
     
             activity()
+            ->causedBy($user)
             ->tap(function ($activity) {
                 $activity->log_name = 'auth_activity'; // Nama log
             })
-                ->causedBy($user)
-                ->log('User logged in');
+  
+            ->withProperties(['role' => $user->role])
+            ->log("{$user->role} logged in");
         } else {
             Log::warning('User casting failed.');
         }

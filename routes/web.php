@@ -50,15 +50,20 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
     });
 
-    Route::middleware('role:Sekretaris')->group(function () {
+    Route::middleware('checkrole:Sekretaris')->group(function () {
         // Routes khusus untuk Sekretaris
+
+        Route::get('/arsipSurat', [SekretarisController::class, 'index'])->name('arsipSurat');
+        Route::get('/arsipSurat/create', [SekretarisController::class, 'create'])->name('arsipSurat.create');
+        Route::post('/arsipSurat', [SekretarisController::class, 'store'])->name('arsipSurat.store');
+        Route::delete('/arsipSurat/{letter}', [SekretarisController::class, 'destroy'])->name('arsipSurat.destroy');
     });
 
-    Route::middleware('role:Bendahara')->group(function () {
+    Route::middleware('checkrole:Bendahara')->group(function () {
         // Routes khusus untuk Bendahara
     });
 
-    Route::middleware('role:Kominfo')->group(function () {
+    Route::middleware('checkrole:Kominfo')->group(function () {
         // Routes khusus untuk Kominfo
     });
 });
@@ -101,12 +106,12 @@ Route::middleware(['auth'])->group(function () {
 //     return view('admin.dashboardAdmin');
 // });
 
-Route::get('/log-activity', function () {
-    return view('admin.logActivity');
-});
-Route::get('/manage-ukm-admin', function () {
-    return view('admin.manageUKM');
-});
+// Route::get('/log-activity', function () {
+//     return view('admin.logActivity');
+// });
+// Route::get('/manage-ukm-admin', function () {
+//     return view('admin.manageUKM');
+// });
 // Route::get('/manage-user', function () {
 //     return view('admin.manageUser');
 // })->name('user');
@@ -129,42 +134,42 @@ Route::get('/manage-ukm-admin', function () {
 
 
 
-// Bendahara
-Route::get('/dashboard-bendahara', function () {
-    return view('bendahara.dashboardBendahara');
-});
+// // Bendahara
+// Route::get('/dashboard-bendahara', function () {
+//     return view('bendahara.dashboardBendahara');
+// });
 
-Route::get('/dashboard-bendahara', function () {
-    return view('bendahara.dashboardBendahara');
-});
+// Route::get('/dashboard-bendahara', function () {
+//     return view('bendahara.dashboardBendahara');
+// });
 
-// Kominfo
-Route::get('/dashboard-kominfo', function () {
-    return view('kominfo.dashboardKominfo');
-});
+// // Kominfo
+// Route::get('/dashboard-kominfo', function () {
+//     return view('kominfo.dashboardKominfo');
+// });
 
 // Kopma
-Route::get('/dashboard-kopma', function () {
-    return view('kopma.penjualanKopma');
-});
+// Route::get('/dashboard-kopma', function () {
+//     return view('kopma.penjualanKopma');
+// });
 
-// Mahasiswa
-Route::get('/home', function () {
-    return view('mahasiswa.homeMahasiswa');
-});
+// // Mahasiswa
+// Route::get('/home', function () {
+//     return view('mahasiswa.homeMahasiswa');
+// });
 
 
-// SDM
-Route::get('/dashboard-sdm', function () {
-    return view('sdm.dashboardSDM');
-});
+// // SDM
+// Route::get('/dashboard-sdm', function () {
+//     return view('sdm.dashboardSDM');
+// });
 
 // Sekertaris
-Route::get('/dashboard-sekertaris', function () {
-    return view('sekertaris.dashboardSekertaris');
-});
+// Route::get('/dashboard-sekertaris', function () {
+//     return view('sekertaris.dashboardSekertaris');
+// });
 
 // UKM
-Route::get('/dashboard-ukm', function () {
-    return view('ukm.dashboardUKM');
-});
+// Route::get('/dashboard-ukm', function () {
+//     return view('ukm.dashboardUKM');
+// });

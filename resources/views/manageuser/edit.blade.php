@@ -30,7 +30,7 @@
                 
                 <h1>Edit User</h1>
 
-                <form action="{{ route('manageuser.update', $user->user_id) }}" method="POST">
+                <form action="{{ route('manageuser.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
             

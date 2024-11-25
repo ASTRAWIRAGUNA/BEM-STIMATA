@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'nim' => 'required|string|unique:users,nim,' . $id . ',user_id',
+            'nim' => 'required|string|unique:users,nim,' . $id . ',id',
             // 'username' => 'required|string|unique:users,username,' . $id . ',user_id',
             'password' => 'nullable|string|min:8',
             'role' => 'required|in:Admin,Sekretaris,Bendahara,Kominfo',

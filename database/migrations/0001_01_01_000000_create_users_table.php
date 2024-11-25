@@ -10,7 +10,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('user_id'); // Primary Key
+            $table->id(); // Primary Key
             $table->string('nama'); // Kolom nama
             $table->string('nim')->unique(); // Kolom NIM
             // $table->string('username')->unique(); // Kolom username

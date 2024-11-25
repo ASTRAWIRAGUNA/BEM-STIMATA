@@ -31,10 +31,15 @@
                 <div class="w-full mt-6">
                     
 
-                    <h1>Tambah User</h1>
+                    {{-- <h1>Tambah User</h1> --}}
 
                     <form action="{{ route('manageuser.store') }}" method="POST">
                         @csrf
+                        {{-- <div>
+                            <label for="nama" class="block text-sm font-medium text-gray-700">Nama</label>
+                            <input type="text" name="nama" id="nama" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Masukkan Nama " required>
+                            @error('nama') <p style="color: red;">{{ $message }}</p> @enderror
+                        </div> --}}
                         <label>Nama:</label>
                         <input type="text" name="nama" value="{{ old('nama') }}" required>
                         @error('nama') <p style="color: red;">{{ $message }}</p> @enderror

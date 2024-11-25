@@ -12,10 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('arsip_surats', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_surat');
-            $table->string('file');
-            $table->timestamps();
+            $table->id(); // Primary key
+            $table->string('title'); // Judul surat
+            $table->string('description'); // desc surat
+            $table->date('date'); // Tanggal surat
+            $table->string('file_path'); // Lokasi file surat (untuk upload PDF)
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Relasi ke tabel users
+            $table->timestamps(); // created_at dan updated_at
         });
     }
 

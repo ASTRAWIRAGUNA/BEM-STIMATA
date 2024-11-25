@@ -60,9 +60,9 @@
                                             <td class="text-center py-3 px-4">{{ $user->nim }}</td>
                                             <td class="text-center py-3 px-4">{{ $user->role }}</td>
                                             <td>
-                                                <a href="{{ route('manageuser.show', $user->user_id) }}">Detail</a>
-                                                <a href="{{ route('manageuser.edit', $user->user_id) }}">Edit</a>
-                                                <form action="{{ route('manageuser.destroy', $user->user_id) }}" method="POST" style="display:inline;">
+                                                <a href="{{ route('manageuser.show', $user->id) }}">Detail</a>
+                                                <a href="{{ route('manageuser.edit', $user->id) }}">Edit</a>
+                                                <form action="{{ route('manageuser.destroy', $user->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" onclick="return confirm('Hapus user ini?')">Hapus</button>
