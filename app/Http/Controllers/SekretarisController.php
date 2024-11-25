@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EksporSurat;
 use App\Models\Arsip_surat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SekretarisController extends Controller
 {
     public function index() {
         $letters = Arsip_surat::where('user_id', Auth::id())->get(); // Hanya surat milik sekretaris yang login
-        return view('sekertaris.arsipSekertaris', compact('letters'));
+        $canExport = $letters->count() > 0; //info surat yang diekspor
+        return view('sekertaris.arsipSekertaris', compact('letters','canExport'));
+
     }
 
      // Form tambah surat
@@ -76,5 +80,22 @@ class SekretarisController extends Controller
          $letter->delete();
  
          return redirect()->route('arsipSurat')->with('success', 'Surat berhasil dihapus!');
+     }
+     public function export(){
+
+        // Ambil semua surat milik user yang login
+        $letters = Arsip_surat::where('user_id', Auth::id())->get();
+         // Jika tidak ada surat, kembalikan dengan pesan error
+        if ($letters->isEmpty()) {
+            return redirect()->route('arsipSurat')->with('error', 'Tidak ada surat yang dapat diekspor.');
+            }
+
+        //log export
+        activity()
+            ->causedBy(Auth::user())
+            ->log('Sekretaris mengekspor data surat');
+
+         
+         return Excel::download(new EksporSurat(Auth::id()), 'arsip_surat.xlsx');    
      }
 }

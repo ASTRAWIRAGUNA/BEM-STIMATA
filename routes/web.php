@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/arsipSurat/create', [SekretarisController::class, 'create'])->name('arsipSurat.create');
         Route::post('/arsipSurat', [SekretarisController::class, 'store'])->name('arsipSurat.store');
         Route::delete('/arsipSurat/{letter}', [SekretarisController::class, 'destroy'])->name('arsipSurat.destroy');
+        Route::get('/arsipSurat/export',[SekretarisController::class,'export'])->name('arsipSurat.export');
     });
 
     Route::middleware('checkrole:Bendahara')->group(function () {

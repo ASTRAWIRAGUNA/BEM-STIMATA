@@ -33,13 +33,25 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List Arsip Surat
                         </p>
+                        @if($canExport)
+                        <a href="{{ route('arsipSurat.export') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                            <i class="ri-add-line mr-3 text-lg"></i> Export Excel
+                        </a>
+                        @else
+                        <a href="{{ route('arsipSurat.export') }}" button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" disabled>
+                            <i class="ri-add-line mr-3 text-lg"></i> Export Excel
+                        </button>
+                        @endif
                         <a href="{{ route('arsipSurat.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
                             <i class="ri-add-line mr-3 text-lg"></i> Tambah Surat
                         </a>
                     </div>
                     @if (session('success'))
                         <p style="color: green;">{{ session('success') }}</p>
+                        @else(session('error'))
+                        <p style="color: red;">{{ session('error') }}</p>
                         @endif
+                        
                     </div>
 
                     <div class="bg-white overflow-auto">
