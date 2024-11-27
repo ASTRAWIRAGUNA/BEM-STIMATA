@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogActivityController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KominfoController;
 use App\Http\Controllers\RedirectController;
@@ -66,6 +66,22 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('checkrole:Kominfo')->group(function () {
         // Routes khusus untuk Kominfo
+        // Crud Peminjaman
+        Route::get('/peminjaman', [KominfoController::class, 'index'])->name('peminjaman');
+        Route::get('/peminjaman/create', [KominfoController::class, 'create'])->name('peminjaman.create');
+        Route::post('/peminjaman', [KominfoController::class, 'store'])->name('peminjaman.store');
+        Route::get('/peminjaman/{peminjaman}/edit', [KominfoController::class, 'edit'])->name('peminjaman.edit');
+        Route::put('/peminjaman/{peminjaman}', [KominfoController::class, 'update'])->name('peminjaman.update');
+        Route::delete('/peminjaman/{peminjaman}', [KominfoController::class, 'destroy'])->name('peminjaman.destroy');
+
+        //CRUD BARANG Kominfo
+         // Routes khusus untuk Kominfo (CRUD Barang)
+        Route::get('/inventories', [InventoryController::class, 'index'])->name('inventories');
+        Route::get('/inventories/create', [InventoryController::class, 'create'])->name('inventories.create');
+        Route::post('/inventories', [InventoryController::class, 'store'])->name('inventories.store');
+        Route::get('/inventories/{inventory}/edit', [InventoryController::class, 'edit'])->name('inventories.edit');
+        Route::put('/inventories/{inventory}', [InventoryController::class, 'update'])->name('inventories.update');
+        Route::delete('/inventories/{inventory}', [InventoryController::class, 'destroy'])->name('inventories.destroy');
     });
 });
 
