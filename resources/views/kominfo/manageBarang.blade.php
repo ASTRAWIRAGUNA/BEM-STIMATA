@@ -46,10 +46,10 @@
                             <thead class="bg-gray-800 text-white">
                                 <tr>
                                     <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nim</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Role</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Role</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Kategori</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Status</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Surat Barang</th>
                                     <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
                                 </tr>
                             

@@ -24,6 +24,6 @@ class Inventory extends Model
     // Relasi ke Peminjaman
     public function peminjaman()
     {
-        return $this->hasMany(Peminjaman::class, 'id');
+        return $this->hasMany(Peminjaman::class, 'inventory_id');
     }
 }

@@ -34,21 +34,21 @@
                     {{-- <h1>Tambah Surat Baru</h1> --}}
 
                     
-                    <form action="{{ route('inventories.store') }}" method="POST">
+                    <form action="{{ route('inventories.store') }}" method="POST" class="bg-white shadow-md rounded px-8 py-6">
                         @csrf
                 
                         <div class="mb-3">
-                            <label for="item_name">Nama Barang</label>
+                            <label for="item_name" class="block text-sm font-medium text-gray-700">Nama Barang</label>
                             <input type="text" name="item_name" id="item_name" class="form-control" required>
                         </div>
                 
                         <div class="mb-3">
-                            <label for="category">Kategori</label>
+                            <label for="category" class="block text-sm font-medium text-gray-700">Kategori</label>
                             <input type="text" name="category" id="category" class="form-control" required>
                         </div>
                 
-                        <div class="mb-3">
-                            <label for="availability_status">Status Ketersediaan</label>
+                        <div class="mb-3" >
+                            <label for="availability_status" class="block text-sm font-medium text-gray-700">Status Ketersediaan</label>
                             <select name="availability_status" id="availability_status" class="form-control" required>
                                 <option value="Available">Tersedia</option>
                                 <option value="Unavailable">Tidak Tersedia</option>
@@ -56,7 +56,7 @@
                         </div>
                 
                         <div class="mb-3">
-                            <label for="requires_letter">Memerlukan Surat</label>
+                            <label for="requires_letter" class="block text-sm font-medium text-gray-700">Memerlukan Surat</label>
                             <select name="requires_letter" id="requires_letter" class="form-control" required>
                                 <option value="1">Ya</option>
                                 <option value="0">Tidak</option>

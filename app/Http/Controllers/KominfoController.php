@@ -11,12 +11,14 @@ use Illuminate\Http\Request;
 
 class KominfoController extends Controller
 {
+
+
     public function index()
     {
          // Ambil semua data inventory
-         $inventories = Inventory::all();
+        //  $inventories = Inventory::all();
         $peminjaman = Peminjaman::with('inventory', 'user', 'surat')->get();
-        return view('kominfo.peminjaman', compact('peminjaman','inventories'));
+        return view('kominfo.peminjaman', compact('peminjaman'));
     }
 
     public function create()
@@ -32,6 +34,7 @@ class KominfoController extends Controller
     {
          // Validasi awal
     $request->validate([
+        'user_id' => 'required|exists:users,id', // Pastikan user ID valid 
         'inventory_id' => 'required|exists:inventories,id',
         'borrow_date' => 'required|date',
         'return_date' => 'required|date|after:borrow_date', // Pastikan tanggal pengembalian setelah tanggal pinjam
@@ -48,8 +51,8 @@ class KominfoController extends Controller
     }
 
     // Pastikan barang masih tersedia
-    if ($inventory->availability_status !== 'Available') {
-        return redirect()->back()->withErrors(['inventory_id' => 'Barang ini sedang tidak tersedia untuk dipinjam.']);
+    if ($inventory->availability_status === 'Unavailable') {
+        return back()->with(['error' , 'Barang ini sedang tidak tersedia untuk dipinjam.']);
     }
 
     // Update status barang menjadi tidak tersedia
@@ -58,7 +61,8 @@ class KominfoController extends Controller
     // Simpan data peminjaman
     Peminjaman::create([
         'inventory_id' => $request->inventory_id,
-        'user_id' => Auth::id(),
+        // 'user_id' => Auth::id(), // gunakan ini agar hanya 1 orang saja yang bisa meminjam
+        'user_id' => $request->user_id, //semua user bisa meminjam
         'surat_id' => $request->surat_id,
         'borrow_date' => $request->borrow_date,
         'return_date' => $request->return_date,
@@ -88,6 +92,7 @@ class KominfoController extends Controller
 
     public function update(Request $request, Peminjaman $peminjaman)
     {
+
 
          // Validasi input
             $request->validate([
@@ -129,6 +134,7 @@ class KominfoController extends Controller
             activity()
                 ->causedBy(Auth::user())
                 ->performedOn($peminjaman)
+                ->logName('Update_Peminjaman')
                 ->log('Peminjaman diperbarui');
 
         // $request->validate([

@@ -32,7 +32,9 @@
                     
 
                     {{-- <h1>Tambah Surat Baru</h1> --}}
-
+                    @if (session('success'))
+                    <p style="color: red;">{{ session('error') }}</p>
+                    @endif
                      <!-- Form Tambah Peminjaman -->
                     <form action="{{ route('peminjaman.store') }}" method="POST" class="bg-white shadow-md rounded px-8 py-6">
                         @csrf
@@ -44,7 +46,7 @@
                                 <option value="" disabled selected>Pilih Barang</option>
                                 @foreach ($inventories as $inventory)
                                     <option value="{{ $inventory->id }}" data-requires-letter="{{ $inventory->requires_letter }}">
-                                        {{ $inventory->item_name }} - {{ $inventory->availability_status ? 'Tersedia' : 'Tidak Tersedia' }}
+                                        {{ $inventory->item_name }} - {{ $inventory->availability_status  }}
                                     </option>
                                 @endforeach
                             </select>
@@ -67,7 +69,10 @@
                             <select name="user_id" id="user_id" class="block w-full mt-1 rounded border-gray-300" required>
                                 <option value="" disabled selected>Pilih User</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->nama }}</option>
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->nama }}
+                                        {{ $user->role }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

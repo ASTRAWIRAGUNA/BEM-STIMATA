@@ -30,6 +30,11 @@ class User extends Authenticatable
             ->useLogName('user_activity') // Nama log (opsional)
             ->logOnlyDirty(); // Hanya mencatat perubahan
     }
+    // public function peminjaman()
+    // {
+    //     return $this->hasMany(Peminjaman::class, 'id');
+    // }
+
     
 
     // protected $casts = [

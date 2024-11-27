@@ -18,12 +18,32 @@ class InventorySeeder extends Seeder
             'item_name' => 'Laptop',
             'category' => 'Elektronik',
             'availability_status' => 'Available',
+            'requires_letter'=> 0,
         ]);
 
         Inventory::create([
             'item_name' => 'Proyektor',
             'category' => 'Elektronik',
             'availability_status' => 'Available',
+            'requires_letter'=> 0,
+        ]);
+        Inventory::create([
+            'item_name' => 'Besi',
+            'category' => 'Elektronik',
+            'availability_status' => 'Available',
+            'requires_letter'=> 0,
+        ]);
+        Inventory::create([
+            'item_name' => 'HP',
+            'category' => 'Elektronik',
+            'availability_status' => 'Available',
+            'requires_letter'=> 0,
+        ]);
+        Inventory::create([
+            'item_name' => 'Knalpot',
+            'category' => 'Elektronik',
+            'availability_status' => 'Available',
+            'requires_letter'=> 0,
         ]);
     }
 }

@@ -51,10 +51,10 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
-                                @foreach ($peminjaman as $item)
+                                @forelse ($peminjaman as $item)
                                 <tr>
                                     <td class="text-center py-3 px-4">{{ $item->id }}</td>
-                                    <td class="text-center py-3 px-4">{{ $item->inventory->item_name ?? 'null'  }}</td>
+                                    <td class="text-center py-3 px-4">{{ $item->inventory->item_name  }}</td>
                                     <td class="text-center py-3 px-4">{{ $item->user->nama }}</td>
                                     <td class="text-center py-3 px-4">{{ $item->borrow_date }}</td>
                                     <td class="text-center py-3 px-4">{{ $item->status }}</td>
@@ -67,7 +67,11 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada Peminjaman.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
