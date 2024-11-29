@@ -19,7 +19,7 @@
 @endsection
 @section('body')
 <div class="flex">
-    @include('partials.sidebarKopma')
+    @include('partials.sidebarBendahara')
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
@@ -33,12 +33,12 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List Penghargaan
                         </p>
-                        <button data-modal-toggle="add-penghargaan-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            <i class="ri-add-line mr-3 text-lg"></i> Add Penghargaan
-                        </button>
+                        <a href="{{ route('penjualan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                            <i class="ri-add-line mr-3 text-lg"></i> Add User
+                        </a>
                     </div>
 
-                    <div class="bg-white overflow-auto">
+                    {{-- <div class="bg-white overflow-auto">
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-800 text-white">
                                 <tr>
@@ -58,11 +58,8 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> --}}
 
-                    <div class="mt-6">
-                        {{-- {{ $penghargaans->links() }} --}}
-                    </div>
                 </div>
             </main>
         </div>

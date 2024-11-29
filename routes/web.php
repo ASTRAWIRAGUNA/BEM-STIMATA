@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KominfoController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\BendaharaController;
+use App\Http\Controllers\PenjualanKopmaController;
 use App\Http\Controllers\SekretarisController;
 
 // Login
@@ -69,8 +70,25 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('checkrole:Bendahara')->group(function () {
         // Routes khusus untuk Bendahara
+
         //dashboard Bendahara
         Route::get('/dashboardBendahara', [BendaharaController::class, 'dashboard'])->name('dashboardBendahara');
+
+        //crud manage kopma
+        Route::get('/bendahara', [BendaharaController::class, 'index'])->name('bendahara');
+        Route::get('/bendahara/create', [BendaharaController::class, 'create'])->name('bendahara.create');
+        Route::post('/bendahara', [BendaharaController::class, 'store'])->name('bendahara.store');
+        Route::get('/bendahara/{bendahara}/edit', [BendaharaController::class, 'edit'])->name('bendahara.edit');
+        Route::put('/bendahara/{bendahara}', [BendaharaController::class, 'update'])->name('bendahara.update');
+        Route::delete('/bendahara/{bendahara}', [BendaharaController::class, 'destroy'])->name('bendahara.destroy');
+        //penjualan kopma
+        Route::get('/penjualan', [PenjualanKopmaController::class, 'index'])->name('penjualan');
+        Route::get('/penjualan/create', [PenjualanKopmaController::class, 'create'])->name('penjualan.create');
+        Route::post('/penjualan', [PenjualanKopmaController::class, 'store'])->name('penjualan.store');
+        Route::get('/penjualan/{penjualan}/edit', [PenjualanKopmaController::class, 'edit'])->name('penjualan.edit');
+        Route::put('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'update'])->name('penjualan.update');
+        Route::delete('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'destroy'])->name('penjualan.destroy');
+
     });
 
     Route::middleware('checkrole:Kominfo')->group(function () {
