@@ -1,0 +1,84 @@
+body {
+    background-color: #ff6666;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .card h2 {
+    margin-bottom: 10px;
+  }
+  
+  .card .value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card .change {
+    font-size: 14px;
+    color: #339933;
+  }
+  
+  .card .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ff6666;
+    margin-top: 20px;
+  }
+  
+  .card .icon.money {
+    background-color: #ff9966;
+  }
+  
+  .card .icon.users {
+    background-color: #ff6666;
+  }
+  
+  .card .icon.clients {
+    background-color: #66ccff;
+  }
+  
+  .card .icon.sales {
+    background-color: #ffcc99;
+  }
+  
+  .card .icon img {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+  }
+  
+  .card .icon.money img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .card .icon.users img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .card .icon.clients img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .card .icon.sales img {
+    display: block;
+    margin : 0 auto;
+  }

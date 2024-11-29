@@ -36,6 +36,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('checkrole:Admin')->group(function () {
         // Routes khusus untuk Admin
 
+        //route dashboard
+        Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('dashboardAdmin');
+
+
         //route manageuser
         Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
         Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
@@ -53,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('checkrole:Sekretaris')->group(function () {
         // Routes khusus untuk Sekretaris
 
+        //dashboard 
+        Route::get('/dashboardSekretaris', [SekretarisController::class, 'dashboard'])->name('dashboardSekretaris');
+
         Route::get('/arsipSurat', [SekretarisController::class, 'index'])->name('arsipSurat');
         Route::get('/arsipSurat/create', [SekretarisController::class, 'create'])->name('arsipSurat.create');
         Route::post('/arsipSurat', [SekretarisController::class, 'store'])->name('arsipSurat.store');
@@ -62,10 +69,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('checkrole:Bendahara')->group(function () {
         // Routes khusus untuk Bendahara
+        //dashboard Bendahara
+        Route::get('/dashboardBendahara', [BendaharaController::class, 'dashboard'])->name('dashboardBendahara');
     });
 
     Route::middleware('checkrole:Kominfo')->group(function () {
         // Routes khusus untuk Kominfo
+
+        //dashboard kominfo
+        Route::get('/dashboardKominfo', [KominfoController::class, 'dashboard'])->name('dashboardKominfo');
+
         // Crud Peminjaman
         Route::get('/peminjaman', [KominfoController::class, 'index'])->name('peminjaman');
         Route::get('/peminjaman/create', [KominfoController::class, 'create'])->name('peminjaman.create');

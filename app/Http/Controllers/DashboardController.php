@@ -12,13 +12,13 @@ class DashboardController extends Controller
         $user = Auth::user();
         switch ($user->role) {
             case 'Admin':
-                return view('admin.dashboardAdmin',compact('user'));
+                return redirect()->route('dashboardAdmin');
             case 'Sekretaris':
-                return view('sekertaris.dashboardSekertaris',compact('user'));
+               return redirect()->route('dashboardSekretaris');
             case 'Bendahara':
-                return view('bendahara.dashboardBendahara',compact('user'));
+                return redirect()->route('dashboardBendahara');
             case 'Kominfo':
-                return view('kominfo.dashboardKominfo',compact('user'));
+                return redirect()->route('dashboardKominfo');
             default:
                 abort(403, 'Unauthorized');
         }

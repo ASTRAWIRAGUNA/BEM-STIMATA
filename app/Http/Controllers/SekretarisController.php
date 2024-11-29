@@ -11,6 +11,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SekretarisController extends Controller
 {
+
+    public function dashboard() {
+       
+        return view('sekertaris.dashboardSekertaris');
+        
+        
+    }
+
     public function index() {
         $letters = Arsip_surat::where('user_id', Auth::id())->get(); // Hanya surat milik sekretaris yang login
         $canExport = $letters->count() > 0; //info surat yang diekspor

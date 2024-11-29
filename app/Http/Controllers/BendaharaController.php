@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class BendaharaController extends Controller
 {
-    public function index() {
+    public function dashboard() {
+       
         return view('bendahara.dashboardBendahara');
+        
+        
     }
 }

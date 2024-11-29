@@ -12,7 +12,12 @@ use Illuminate\Http\Request;
 class KominfoController extends Controller
 {
 
-
+    public function dashboard() {
+       
+        return view('kominfo.dashboardKominfo');
+        
+        
+    }
     public function index()
     {
          // Ambil semua data inventory
