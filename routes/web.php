@@ -49,9 +49,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
         Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
         Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
-        //route logact
-        // Route::get('/logactivity', [AuthController::class, 'log'])->name('logactivity');
-        // Route::get('/logactivity', [UserController::class, 'log'])->name('logactivity');
+        
+        //route LOG
         Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
     });
 
