@@ -7,13 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Kopma extends Model
 {
     
-    protected $table = 'kopmas';
+    //use HasFactory;
 
     protected $fillable = [
-        // 'peminjaman_id',
         'item_name',
         'quantity',
-        'item_price'
-        
+        'item_price',
     ];
+
+    /**
+     * Relasi ke OrderItem.
+     * Satu item di tabel kopma dapat dimasukkan dalam banyak order item.
+     */
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
 }

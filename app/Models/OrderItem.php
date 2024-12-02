@@ -6,14 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    
-    public function order(){
-        
-        return $this->belongsTo(OrderItem::class);
+    //use HasFactory;
+
+    protected $fillable = [
+        'order_id',
+        'kopma_id',
+        'item_name',
+        'quantity',
+        'price_per_unit',
+        'total_price',
+    ];
+
+    /**
+     * Relasi ke model Order (Many-to-One).
+     */
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 
-    public function kopma(){
-        
-        return $this->belongsTo(OrderItem::class);
+    /**
+     * Relasi ke model Kopma (Many-to-One).
+     */
+    public function kopma()
+    {
+        return $this->belongsTo(Kopma::class);
     }
 }

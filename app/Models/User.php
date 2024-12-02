@@ -7,6 +7,7 @@ use Spatie\Activitylog\LogOptions;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Order;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
@@ -29,6 +30,11 @@ class User extends Authenticatable
             ->logOnly(['nama', 'nim', 'role']) // Kolom yang dicatat
             ->useLogName('user_activity') // Nama log (opsional)
             ->logOnlyDirty(); // Hanya mencatat perubahan
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
     // public function peminjaman()
     // {
