@@ -50,6 +50,7 @@
                                 <div class="form-group">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
                                     <select name="kopma_id[]" class="form-control" required>
+                                        <option value="" disabled selected>Pilih FUE</option>
                                         @foreach($kopmas as $kopma)
                                             <option value="{{ $kopma->id }}" data-price="{{ $kopma->item_price }}">
                                                 {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
@@ -61,7 +62,7 @@
                                 <!-- Input untuk jumlah -->
                                 <div class="form-group">
                                     <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="form-control quantity" value="1" required min="1">
+                                    <input type="number" name="quantity[]" class="form-control quantity"  required >
                                 </div>
                             </div>
                         </div>
@@ -116,27 +117,26 @@
                                 }
                                 totalPrice += pricePerUnit * quantity;
                             });
-                             // Tampilkan pesan error jika ada
-       
+                            
         
         
                            
                     
                             // Hitung kembalian
                             totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
-                            const change = payment >= totalPrice ? payment - totalPrice : 0;
+                            const change = payment - totalPrice;
                             changeInput.value = 'Rp. ' + change.toLocaleString('id-ID'); // Format Rupiah
                              // Tampilkan pesan error jika ada
-        const errorContainer = document.getElementById('error-container');
-        errorContainer.innerHTML = '';
-        if (errorMessages.length > 0) {
-            errorMessages.forEach(message => {
-                const errorElement = document.createElement('div');
-                errorElement.classList.add('text-red-500', 'mb-2');
-                errorElement.innerText = message;
-                errorContainer.appendChild(errorElement);
-            });
-        }
+                                const errorContainer = document.getElementById('error-container');
+                                errorContainer.innerHTML = '';
+                                if (errorMessages.length > 0) {
+                                    errorMessages.forEach(message => {
+                                        const errorElement = document.createElement('div');
+                                        errorElement.classList.add('text-red-500', 'mb-2');
+                                        errorElement.innerText = message;
+                                        errorContainer.appendChild(errorElement);
+                                    });
+                                }
                         }
                     
                         // Fungsi untuk menambahkan baris item
@@ -148,6 +148,7 @@
                                 <div class="form-group">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
                                     <select name="kopma_id[]" class="form-control" required>
+                                        <option value="" disabled selected>Pilih FUE</option>
                                         @foreach($kopmas as $kopma)
                                             <option value="{{ $kopma->id }}" 
                                                 data-price="{{ $kopma->item_price }}" 
@@ -160,23 +161,30 @@
                     
                                 <div class="form-group">
                                     <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="form-control quantity" value="1" required min="1">
+                                    <input type="number" name="quantity[]" class="form-control quantity"  required >
                                 </div>
+                                <button type="button" class="btn btn-danger remove-item" style="margin-top: 30px;">Hapus</button>
                             `;
                     
                             itemsContainer.appendChild(newItemRow);
+                            const removeButton = newItemRow.querySelector('.remove-item');
+    removeButton.addEventListener('click', () => {
+        newItemRow.remove();
+        calculateTotal(); // Perbarui total jika ada perubahan
+    });
+                            
                         });
                         
                          // Validasi sebelum submit form
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (e) => {
-        calculateTotal();
-        const hasError = document.querySelector('.border-red-500');
-        if (hasError) {
-            e.preventDefault();
-            alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
-        }
-    });
+                            const form = document.querySelector('form');
+                            form.addEventListener('submit', (e) => {
+                                calculateTotal();
+                                const hasError = document.querySelector('.border-red-500');
+                                if (hasError) {
+                                    e.preventDefault();
+                                    alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
+                                }
+                            });
 
                         // Hitung total dan kembalian setiap kali input diubah
                         itemsContainer.addEventListener('input', calculateTotal);
