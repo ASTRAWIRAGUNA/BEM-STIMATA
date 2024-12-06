@@ -48,7 +48,7 @@
                         @csrf
                     
                         <div id="items-container">
-                            <div class="item-col">
+                            <div class="item-row">
                                 <!-- Dropdown untuk memilih item Kopma -->
                                 <div class="form-group flex flex-col sm:flex-row sm:justify-between">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
@@ -177,40 +177,6 @@
     });
                             
                         });
-                            // Fungsi untuk menambahkan baris item
-                            addItemButton.addEventListener('click', () => {
-                                const newItemRow = document.createElement('div');
-                                newItemRow.classList.add('item-row');
-                                newItemRow.innerHTML = `
-                                    <div class="form-group">
-                                        <label for="kopma_id[]">Pilih Item Kopma</label>
-                                        <select name="kopma_id[]" class="form-control" required>
-                                            <option value="" disabled selected>Pilih FUE</option>
-                                            @foreach($kopmas as $kopma)
-                                                <option value="{{ $kopma->id }}" 
-                                                    data-price="{{ $kopma->item_price }}" 
-                                                    data-stock="{{ $kopma->quantity }}">
-                                                    {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                        
-                                    <div class="form-group">
-                                        <label for="quantity[]">Jumlah</label>
-                                        <input type="number" name="quantity[]" class="form-control quantity"  required >
-                                    </div>
-                                    <button type="button" class="btn btn-danger remove-item" style="margin-top: 30px;">Hapus</button>
-                                `;
-                        
-                                itemsContainer.appendChild(newItemRow);
-                                const removeButton = newItemRow.querySelector('.remove-item');
-                                removeButton.addEventListener('click', () => {
-                                    newItemRow.remove();
-                                    calculateTotal(); // Perbarui total jika ada perubahan
-                                });
-                                
-                            });
                             
                             // Validasi sebelum submit form
                                 const form = document.querySelector('form');
