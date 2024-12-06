@@ -27,46 +27,59 @@
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
                 <div class="container">
-                    <h1>Daftar Pesanan</h1>
-                    
-                    <!-- Menampilkan pesan sukses atau error jika ada -->
+                    <h1 class="text-3xl text-black pb-6 text-bold">Daftar Penjualan </h1>
+                    <div class="w-full mt-6">
+                        <div class="flex justify-between mb-5">
+                            <p class="text-xl pb-3 flex items-center">
+                                <i class="ri-list-check mr-2"></i> List Item Kopma
+                            </p>
+                            <a href="{{ route('penjualan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Add Penjualan
+                            </a>
+                        </div>
+                        <!-- Menampilkan pesan sukses atau error jika ada -->
                     @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                    <div class="alert alert-success">{{ session('success') }}</div>
                     @elseif(session('error'))
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
             
                     <!-- Tabel Daftar Pesanan -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tanggal Pesanan</th>
-                                <th>Total Harga</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($orders as $order)
+                    <div class="bg-white overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-800 text-white">
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $order->order_date }}</td>
-                                    <td>{{ $order->total_amount }}</td>
-                                    <td>
-                                        <a href="{{ route('penjualan.edit', $order->id) }}" class="btn btn-primary">Edit</a>
-                                        <form action="{{ route('penjualan.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
-                                    </td>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Pesanan</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Total Harga</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $no = 1; // Variabel manual untuk nomor urut
+                                @endphp
+                                @foreach($orders as $order)
+                                    @foreach($order->orderItems as $orderItem)
+                                        <tr>
+                                            <td class="text-center py-3 px-4">{{ $no++ }}</td>
+                                            <td class="text-center py-3 px-4">{{ $orderItem->item_name }}</td>
+                                            <td class="text-center py-3 px-4">{{ $order->order_date }}</td>
+                                            <td class="text-center py-3 px-4">{{ $orderItem->total_price }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
                     
-                    <!-- Tautan untuk membuat pesanan baru -->
-                    <a href="{{ route('penjualan.create') }}" class="btn btn-success">Buat Pesanan Baru</a>
+                    </div>
+                    
+                    </div>
+
+                    
+                    
                 </div>
             </main>
         </div>

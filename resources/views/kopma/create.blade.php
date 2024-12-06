@@ -26,9 +26,12 @@
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-flow: row-reverse wrap p-6">
-                
+                <div class="card border-primary" >
+                    <div class="card-body">
+                        <h1 class="text-3xl text-black pb-6 text-bold">Tambahkan Penjualan </h1>
+            <div class="w-full mt-6">           
                 <div class="container">
-                    <h1>Tambah Pesanan</h1>
+                  
                         <!-- Tampilkan pesan error -->
                         @if ($errors->any())
                         <div class="alert alert-danger">
@@ -41,18 +44,18 @@
                     @endif
 
 
-                    <form id="penjualanForm" method="POST" action="{{ route('penjualan.store') }}">
+                    <form id="penjualanForm" method="POST" action="{{ route('penjualan.store') }} "   class="bg-white shadow-md rounded px-8 py-6">
                         @csrf
                     
                         <div id="items-container">
-                            <div class="item-row">
+                            <div class="item-col">
                                 <!-- Dropdown untuk memilih item Kopma -->
-                                <div class="form-group">
+                                <div class="form-group flex flex-col sm:flex-row sm:justify-between">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
                                     <select name="kopma_id[]" class="form-control" required>
-                                        <option value="" disabled selected>Pilih FUE</option>
+                                        <option value="" class="text-center" disabled selected>Pilih Item</option>
                                         @foreach($kopmas as $kopma)
-                                            <option value="{{ $kopma->id }}" data-price="{{ $kopma->item_price }}">
+                                            <option value="{{ $kopma->id }}" data-price ="{{ $kopma->item_price }}">
                                                 {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
                                             </option>
                                         @endforeach
@@ -60,32 +63,37 @@
                                 </div>
                     
                                 <!-- Input untuk jumlah -->
-                                <div class="form-group">
+                                <div class="form-group mt-2 flex flex-col sm:flex-row sm:justify-between">
                                     <label for="quantity[]">Jumlah</label>
                                     <input type="number" name="quantity[]" class="form-control quantity"  required >
                                 </div>
+                                
                             </div>
+                            <button type="button" id="add-item" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 p-2 item-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >Tambah Item</button>
                         </div>
-                    
-                        <!-- Input untuk jumlah pembayaran -->
-                        <div class="form-group">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Input untuk jumlah pembayaran -->
+                        <div class="form-group mt-2 flex justify-between">
                             <label for="payment">Jumlah Pembayaran</label>
                             <input type="number" name="payment" id="payment" class="form-control" value="0" min="0" required>
                         </div>
                     
                         <!-- Menampilkan Total Harga dan Kembalian -->
-                        <div class="form-group">
+                        <div class="form-group mt-2 flex justify-between">
                             <label>Total Harga</label>
                             <input type="text" id="total_price" class="form-control" value="Rp. 0" disabled>
                         </div>
                     
-                        <div class="form-group">
+                        <div class="form-group mt-2 flex justify-between">
                             <label>Kembalian</label>
                             <input type="text" id="change" class="form-control" value="Rp. 0" disabled>
                         </div>
+                        </div>
                     
-                        <button type="button" id="add-item" class="btn btn-secondary">Tambah Item</button>
-                        <button type="submit" class="btn btn-primary">Buat Pesanan</button>
+                        
+                        
+                        <button type="submit" class="btn btn-primary w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-4 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buat Penjualan</button>
                     </form>
                     
                     <script>
@@ -145,10 +153,10 @@
                             newItemRow.classList.add('item-row');
                     
                             newItemRow.innerHTML = `
-                                <div class="form-group">
+                                <div class="form-group mt-2 flex flex-col sm:flex-row sm:justify-between">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
-                                    <select name="kopma_id[]" class="form-control" required>
-                                        <option value="" disabled selected>Pilih FUE</option>
+                                    <select name="kopma_id[]" class="form-control mt-2 text-center" required>
+                                        <option value="" disabled selected>Pilih Item</option>
                                         @foreach($kopmas as $kopma)
                                             <option value="{{ $kopma->id }}" 
                                                 data-price="{{ $kopma->item_price }}" 
@@ -159,11 +167,11 @@
                                     </select>
                                 </div>
                     
-                                <div class="form-group">
+                                <div class="form-group  mt-2 flex flex-col sm:flex-row sm:justify-between ">
                                     <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="form-control quantity"  required >
+                                    <input type="number" name="quantity[]" class="form-control quantity "  required >
                                 </div>
-                                <button type="button" class="btn btn-danger remove-item" style="margin-top: 30px;">Hapus</button>
+                                <button type="button" class="btn btn-danger remove-item  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 items-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Hapus</button>
                             `;
                     
                             itemsContainer.appendChild(newItemRow);
