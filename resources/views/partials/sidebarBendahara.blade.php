@@ -22,9 +22,11 @@
             <i class="fas fa-align-left mr-3"></i>
             Keuangan
         </a>
-        <a href="tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-            <i class="fas fa-tablet-alt mr-3"></i>
-            Log Kopma Penjualan
+        <a href="{{ route('logKopma') }}" 
+        class="flex items-center  text-white py-4 pl-6 nav-item
+        {{ (request()->is('logKopma')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
+            <i class="fas fa-sticky-note mr-3"></i>
+            LOG KOPMA DODOLAN
         </a>
         <a href="{{ route('penjualan') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item

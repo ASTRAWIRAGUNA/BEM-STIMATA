@@ -15,6 +15,10 @@ class LogKopma extends Model
     {
         return $this->belongsTo(Order::class);
     }
+    public function orderItem()
+    {
+        return $this->belongsTo(OrderItem::class);
+    }
 
     public function user()
     {

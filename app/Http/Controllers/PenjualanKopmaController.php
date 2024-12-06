@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; // Untuk menangani HTTP request
-use App\Models\Order;        // Model untuk tabel orders
-use App\Models\OrderItem;    // Model untuk tabel order_items
-use App\Models\Kopma;        // Model untuk tabel kopma
-use Illuminate\Support\Facades\Auth; // Untuk mendapatkan user yang sedang login
+use App\Models\LogKopma;
 use Illuminate\Support\Facades\DB;
+use App\Models\Kopma;        // Model untuk tabel kopma
+use App\Models\Order;        // Model untuk tabel orders
+use Illuminate\Http\Request; // Untuk menangani HTTP request
+use App\Models\OrderItem;    // Model untuk tabel order_items
+use Illuminate\Support\Facades\Auth; // Untuk mendapatkan user yang sedang login
 
 class PenjualanKopmaController extends Controller
 {
@@ -82,6 +83,14 @@ class PenjualanKopmaController extends Controller
         'order_date' => now(),
         'total_amount' => $totalPrice,
     ]);
+     // Tambahkan log ke tabel log_kopma
+     LogKopma::create([
+        'order_id' => $order->id,
+        'user_id' => Auth::id(),
+        'transaction_date' => $order->order_date,
+        'total_amount' => $order->total_amount,
+    ]);
+
 
     foreach ($validated['kopma_id'] as $index => $kopmaId) {
         $kopma = Kopma::findOrFail($kopmaId);

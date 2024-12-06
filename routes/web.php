@@ -11,6 +11,7 @@ use App\Http\Controllers\KominfoController;
 use App\Http\Controllers\BendaharaController;
 use App\Http\Controllers\PenjualanKopmaController;
 use App\Http\Controllers\SekretarisController;
+use App\Http\Controllers\LogKopmaController;
 
 // Login
 Route::get('/', function ()  {
@@ -86,7 +87,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penjualan/{penjualan}/edit', [PenjualanKopmaController::class, 'edit'])->name('penjualan.edit');
         Route::put('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'update'])->name('penjualan.update');
         Route::delete('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'destroy'])->name('penjualan.destroy');
-
+        //logKopma
+        Route::get('/logKopma', [LogKopmaController::class, 'index'])->name('logKopma');
     });
 
     Route::middleware('checkrole:Kominfo')->group(function () {
