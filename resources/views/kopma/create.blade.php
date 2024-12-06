@@ -125,11 +125,7 @@
                                 }
                                 totalPrice += pricePerUnit * quantity;
                             });
-                            
-        
-        
-                           
-                    
+            
                             // Hitung kembalian
                             totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
                             const change = payment - totalPrice;
@@ -146,7 +142,6 @@
                                     });
                                 }
                         }
-                    
                         // Fungsi untuk menambahkan baris item
                         addItemButton.addEventListener('click', () => {
                             const newItemRow = document.createElement('div');
@@ -182,24 +177,58 @@
     });
                             
                         });
+                            // Fungsi untuk menambahkan baris item
+                            addItemButton.addEventListener('click', () => {
+                                const newItemRow = document.createElement('div');
+                                newItemRow.classList.add('item-row');
+                                newItemRow.innerHTML = `
+                                    <div class="form-group">
+                                        <label for="kopma_id[]">Pilih Item Kopma</label>
+                                        <select name="kopma_id[]" class="form-control" required>
+                                            <option value="" disabled selected>Pilih FUE</option>
+                                            @foreach($kopmas as $kopma)
+                                                <option value="{{ $kopma->id }}" 
+                                                    data-price="{{ $kopma->item_price }}" 
+                                                    data-stock="{{ $kopma->quantity }}">
+                                                    {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                         
-                         // Validasi sebelum submit form
-                            const form = document.querySelector('form');
-                            form.addEventListener('submit', (e) => {
-                                calculateTotal();
-                                const hasError = document.querySelector('.border-red-500');
-                                if (hasError) {
-                                    e.preventDefault();
-                                    alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
-                                }
+                                    <div class="form-group">
+                                        <label for="quantity[]">Jumlah</label>
+                                        <input type="number" name="quantity[]" class="form-control quantity"  required >
+                                    </div>
+                                    <button type="button" class="btn btn-danger remove-item" style="margin-top: 30px;">Hapus</button>
+                                `;
+                        
+                                itemsContainer.appendChild(newItemRow);
+                                const removeButton = newItemRow.querySelector('.remove-item');
+                                removeButton.addEventListener('click', () => {
+                                    newItemRow.remove();
+                                    calculateTotal(); // Perbarui total jika ada perubahan
+                                });
+                                
                             });
+                            
+                            // Validasi sebelum submit form
+                                const form = document.querySelector('form');
+                                form.addEventListener('submit', (e) => {
+                                    calculateTotal();
+                                    const hasError = document.querySelector('.border-red-500');
+                                    if (hasError) {
+                                        e.preventDefault();
+                                        alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
+                                    }
+                                });
 
-                        // Hitung total dan kembalian setiap kali input diubah
-                        itemsContainer.addEventListener('input', calculateTotal);
-                        paymentInput.addEventListener('input', calculateTotal);
-                    
-                        // Hitung total awal
-                        calculateTotal();
+                            // Hitung total dan kembalian setiap kali input diubah
+                            itemsContainer.addEventListener('input', calculateTotal);
+                            paymentInput.addEventListener('input', calculateTotal);
+                        
+                            // Hitung total awal
+                            calculateTotal();
                     </script>
                 </div>
             </main>
