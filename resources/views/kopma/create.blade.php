@@ -29,7 +29,18 @@
                 
                 <div class="container">
                     <h1>Tambah Pesanan</h1>
-            
+                        <!-- Tampilkan pesan error -->
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+
                     <form id="penjualanForm" method="POST" action="{{ route('penjualan.store') }}">
                         @csrf
                     
@@ -82,27 +93,50 @@
                         const paymentInput = document.getElementById('payment');
                         const totalPriceInput = document.getElementById('total_price');
                         const changeInput = document.getElementById('change');
-                    
-                        // Fungsi untuk menghitung total harga dan kembalian
+                            // Fungsi untuk menghitung total harga dan kembalian
                         function calculateTotal() {
                             let totalPrice = 0;
                             let payment = parseInt(paymentInput.value);
-                    
+                            let errorMessages = [];
                             // Iterasi semua item yang dipilih
                             const itemRows = document.querySelectorAll('.item-row');
                             itemRows.forEach(row => {
                                 const quantityInput = row.querySelector('.quantity');
                                 const kopmaSelect = row.querySelector('select');
                                 const pricePerUnit = parseInt(kopmaSelect.options[kopmaSelect.selectedIndex].getAttribute('data-price'));
+                                const maxStock = parseInt(kopmaSelect.options[kopmaSelect.selectedIndex].getAttribute('data-stock'));
                                 const quantity = parseInt(quantityInput.value);
+
+                                 // Validasi stok barang
+                                if (quantity > maxStock) {
+                                    errorMessages.push(`Jumlah pesanan untuk item '${kopmaSelect.options[kopmaSelect.selectedIndex].text}' melebihi stok tersedia (${maxStock}).`);
+                                    quantityInput.classList.add('border-red-500');
+                                } else {
+                                    quantityInput.classList.remove('border-red-500');
+                                }
                                 totalPrice += pricePerUnit * quantity;
                             });
-                    
-                            totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
+                             // Tampilkan pesan error jika ada
+       
+        
+        
+                           
                     
                             // Hitung kembalian
+                            totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
                             const change = payment >= totalPrice ? payment - totalPrice : 0;
                             changeInput.value = 'Rp. ' + change.toLocaleString('id-ID'); // Format Rupiah
+                             // Tampilkan pesan error jika ada
+        const errorContainer = document.getElementById('error-container');
+        errorContainer.innerHTML = '';
+        if (errorMessages.length > 0) {
+            errorMessages.forEach(message => {
+                const errorElement = document.createElement('div');
+                errorElement.classList.add('text-red-500', 'mb-2');
+                errorElement.innerText = message;
+                errorContainer.appendChild(errorElement);
+            });
+        }
                         }
                     
                         // Fungsi untuk menambahkan baris item
@@ -115,7 +149,9 @@
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
                                     <select name="kopma_id[]" class="form-control" required>
                                         @foreach($kopmas as $kopma)
-                                            <option value="{{ $kopma->id }}" data-price="{{ $kopma->item_price }}">
+                                            <option value="{{ $kopma->id }}" 
+                                                data-price="{{ $kopma->item_price }}" 
+                                                data-stock="{{ $kopma->quantity }}">
                                                 {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
                                             </option>
                                         @endforeach
@@ -130,7 +166,18 @@
                     
                             itemsContainer.appendChild(newItemRow);
                         });
-                    
+                        
+                         // Validasi sebelum submit form
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        calculateTotal();
+        const hasError = document.querySelector('.border-red-500');
+        if (hasError) {
+            e.preventDefault();
+            alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
+        }
+    });
+
                         // Hitung total dan kembalian setiap kali input diubah
                         itemsContainer.addEventListener('input', calculateTotal);
                         paymentInput.addEventListener('input', calculateTotal);

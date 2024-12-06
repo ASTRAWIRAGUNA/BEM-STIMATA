@@ -7,6 +7,7 @@ use App\Models\Order;        // Model untuk tabel orders
 use App\Models\OrderItem;    // Model untuk tabel order_items
 use App\Models\Kopma;        // Model untuk tabel kopma
 use Illuminate\Support\Facades\Auth; // Untuk mendapatkan user yang sedang login
+use Illuminate\Support\Facades\DB;
 
 class PenjualanKopmaController extends Controller
 {
@@ -39,63 +40,71 @@ class PenjualanKopmaController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input
-        $validated = $request->validate([
-            'kopma_id' => 'required|array', // Array of kopma_id
-            'kopma_id.*' => 'required|exists:kopmas,id', // Setiap kopma_id harus valid
-            'quantity' => 'required|array', // Array of quantity
-            'quantity.*' => 'required|integer|min:1', // Jumlah harus integer dan min 1
-            'payment' => 'required|numeric|min:0',
-        ]);
+         // Validasi input
+    $validated = $request->validate([
+        'kopma_id' => 'required|array',
+        'kopma_id.*' => 'required|exists:kopmas,id',
+        'quantity' => 'required|array',
+        'quantity.*' => 'required|integer|min:1',
+        'payment' => 'required|numeric|min:0',
+    ]);
 
-        // Hitung total harga
-        $totalPrice = 0;
-        $orderItems = [];
+    // Inisialisasi total harga dan error
+    $totalPrice = 0;
+    $errors = [];
 
-        foreach ($validated['kopma_id'] as $index => $kopmaId) {
-            $kopma = Kopma::findOrFail($kopmaId);
-            $quantity = $validated['quantity'][$index];
+    foreach ($validated['kopma_id'] as $index => $kopmaId) {
+        $kopma = Kopma::findOrFail($kopmaId);
+        $quantity = $validated['quantity'][$index];
+
+        // Cek stok barang
+        if ($kopma->quantity < $quantity) {
+            $errors[] = "Stok untuk item '{$kopma->item_name}' tidak mencukupi. Stok tersedia: {$kopma->quantity}.";
+        } else {
             $totalPrice += $kopma->item_price * $quantity;
-
-            // Simpan order item
-            $orderItems[] = [
-                'kopma_id' => $kopma->id,
-                'item_name' => $kopma->item_name,
-                'quantity' => $quantity,
-                'price_per_unit' => $kopma->item_price,
-                'total_price' => $kopma->item_price * $quantity,
-            ];
-
-            // Kurangi stok kopma
-            $kopma->quantity -= $quantity;
-            $kopma->save();
-
-            if ($kopma->quantity < $quantity) {
-                return back()->with('error', 'Stok untuk ' . $kopma->item_name . ' tidak cukup.');
-            }
         }
+    }
+     // Cek apakah pembayaran mencukupi
+     if ($request->payment < $totalPrice) {
+        $errors[] = "Jumlah pembayaran tidak mencukupi. Total harga: Rp. " . number_format($totalPrice, 0, ',', '.') . ". Pembayaran Anda: Rp. " . number_format($request->payment, 0, ',', '.');
+    }
 
-        // Simpan pesanan
-        $order = Order::create([
-            'user_id' => Auth::id(),
-            'order_date' => now(),
-            'total_amount' => $totalPrice,
-        ]);
+    // Jika ada error, kembalikan ke halaman create dengan pesan error
+    if (!empty($errors)) {
+        return redirect()->back()
+            ->withErrors($errors) // Kirim error sebagai bagian dari session
+            ->withInput(); // Kembalikan input ke form
+    }
+
+    // Jika tidak ada error, simpan pesanan
+    $order = Order::create([
+        'user_id' => Auth::id(),
+        'order_date' => now(),
+        'total_amount' => $totalPrice,
+    ]);
+
+    foreach ($validated['kopma_id'] as $index => $kopmaId) {
+        $kopma = Kopma::findOrFail($kopmaId);
+        $quantity = $validated['quantity'][$index];
 
         // Simpan item pesanan
-        foreach ($orderItems as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'kopma_id' => $item['kopma_id'],
-                'item_name' => $item['item_name'],
-                'quantity' => $item['quantity'],
-                'price_per_unit' => $item['price_per_unit'],
-                'total_price' => $item['total_price'],
-            ]);
-        }
+        OrderItem::create([
+            'order_id' => $order->id,
+            'kopma_id' => $kopma->id,
+            'item_name' => $kopma->item_name,
+            'quantity' => $quantity,
+            'price_per_unit' => $kopma->item_price,
+            'total_price' => $kopma->item_price * $quantity,
+        ]);
 
-        // Redirect ke halaman penjualan atau tampilan yang sesuai
-        return redirect()->route('penjualan')->with('success', 'Pesanan berhasil dibuat.');
+        // Kurangi stok barang
+        $kopma->quantity -= $quantity;
+        $kopma->save();
+    }
+
+    return redirect()->route('penjualan')
+        ->with('success', 'Pesanan berhasil dibuat.');
+
     }
 }
 
