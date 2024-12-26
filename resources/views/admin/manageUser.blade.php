@@ -3,6 +3,9 @@
 <title>BEM | Admin Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
 <style>
     .font-family-karla { font-family: karla; }
     .bg-sidebar { background: #3d68ff; }
@@ -26,8 +29,8 @@
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
+                <div class="sticky top-0 z-10 bg-white shadow-md p-6">
                 <h1 class="text-3xl text-black pb-6 text-bold">Master </h1>
-
                 <div class="w-full mt-6">
                     <div class="flex justify-between mb-5">
                         <p class="text-xl pb-3 flex items-center">
@@ -59,13 +62,24 @@
                                             <td class="text-center py-3 px-4">{{ $user->nama }}</td>
                                             <td class="text-center py-3 px-4">{{ $user->nim }}</td>
                                             <td class="text-center py-3 px-4">{{ $user->role }}</td>
-                                            <td>
-                                                <a href="{{ route('manageuser.show', $user->id) }}">Detail</a>
-                                                <a href="{{ route('manageuser.edit', $user->id) }}">Edit</a>
+                                            <td class="text-center py-3 px-4">
+                                                
+                                                <!-- Detail Icon -->
+                                                <a href="{{ route('manageuser.show', $user->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Detail">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                 <!-- Edit Icon -->
+                                                <a href="{{ route('manageuser.edit', $user->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                
+                                                 <!-- Delete Icon -->
                                                 <form action="{{ route('manageuser.destroy', $user->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus user ini?')">Hapus</button>
+                                                    <button type="submit" onclick="return confirm('Hapus user ini?')" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
