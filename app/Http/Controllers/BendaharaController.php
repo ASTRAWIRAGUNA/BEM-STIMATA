@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kopma;
 use App\Models\OrderItem;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,8 +12,12 @@ class BendaharaController extends Controller
 {
 
     public function dashboard() {
+
+        $totalbarang = Kopma::count();
+        $totalpenjualan = OrderItem::count();
+        $totalpendapatan = Order::sum('total_amount');
        
-        return view('bendahara.dashboardBendahara');
+        return view('bendahara.dashboardBendahara',  compact('totalbarang', 'totalpenjualan', 'totalpendapatan'));
     } 
         
 
@@ -36,8 +41,10 @@ class BendaharaController extends Controller
         return redirect()->route('bendahara')->with('success', 'Item berhasil ditambahkan!');
     }
 
-    public function update(Request $request, Kopma $kopma)
+    public function update(Request $request, $id)
     {
+        $kopma = Kopma::findOrFail($id);
+
         $request->validate([
            'item_name' => 'required|string|max:255',
             'quantity' => 'required',

@@ -1,8 +1,9 @@
 @extends('base')
 @section('head')
-<title>Fairus | Admin Page</title>
+<title>Fairus | Bendahara Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     .font-family-karla { font-family: karla; }
     .bg-sidebar { background: #3d68ff; }
@@ -26,12 +27,12 @@
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Master Penghargaan</h1>
+                <h1 class="text-3xl text-black pb-6 text-bold">Log Activity Kopma</h1>
 
                 <div class="w-full mt-6">
                     <div class="flex justify-between mb-5">
                         <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List Penghargaan
+                            <i class="ri-list-check mr-2"></i> List Log Kopma
                         </p>
                     </div>
 

@@ -1,8 +1,9 @@
 @extends('base')
 @section('head')
-<title>Fairus | Admin Page</title>
+<title>Fairus | Bendahara Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     .font-family-karla { font-family: karla; }
     .bg-sidebar { background: #3d68ff; }
@@ -38,21 +39,26 @@
                 
                         <div class="mb-3 ">
                             <label for="item_name" class="block text-sm font-medium text-gray-700">Nama Barang</label>
-                            <input type="text" name="item_name" id="item_name" class="form-control" required>
+                            <input type="text" name="item_name" id="item_name" 
+                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
                         </div>
                 
                         <div class="mb-3">
                             <label for="quantity" class="block text-sm font-medium text-gray-700">Stok</label>
-                            <input type="number" name="quantity" id="quantity" class="form-control" required>
+                            <input type="number" name="quantity" id="quantity" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                             required>
                         </div>
 
                         <div class="mb-3">
                             <div class="d-flex justify-content-between">
                             <label for="item_price" class="block text-sm font-medium text-gray-700">Harga</label>
-                            <input type="number" name="item_price" id="item_price" class="form-control" required>
+                            <input type="number" name="item_price" id="item_price" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                             required>
                             </div>
                         </div>                                                          
-                        <button type="submit"  class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " >Simpan</button>
+                        <button type="submit"  
+                        class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" >
+                        Simpan</button>
                     </form>
 
 

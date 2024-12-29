@@ -3,7 +3,6 @@
 <title>BEM | Admin Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
-{{-- icon --}}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     .font-family-karla { font-family: karla; }
@@ -61,15 +60,19 @@
                                             <td class="text-center py-3 px-4">{{ $kopma->item_name }}</td>
                                             <td class="text-center py-3 px-4">{{ $kopma->quantity }}</td>
                                             <td class="text-center py-3 px-4">Rp.{{ number_format($kopma->item_price,2,'.',',') }}</td>
-                                            <td>
-                                                <div class="d-flex justify-contentd-flex justify-content-between-between">
-                                                    <a href="{{ route('bendahara.edit', $kopma->id) }}">Edit</a>
-                                                    <form action="{{ route('bendahara.destroy', $kopma->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus user ini?')">Hapus</button>
-                                                    </form>
-                                                </div>
+                                            <td class="text-center py-3 px-4">
+
+                                                <a href="{{ route('bendahara.edit', $kopma->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+
+                                                <form action="{{ route('bendahara.destroy', $kopma->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Hapus user ini?')" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
+                                                    <i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                                
                                                 
                                             </td>
                                         </tr>
