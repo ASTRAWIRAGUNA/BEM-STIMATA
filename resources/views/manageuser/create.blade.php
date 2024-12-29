@@ -24,42 +24,6 @@
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
 
-        {{-- <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-            <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Tambah User </h1>
-                
-
-                <div class="w-full mt-6">
-                    <form action="{{ route('manageuser.store') }}" method="POST">
-                        @csrf
-                        <label>Nama:</label>
-                        <input type="text" name="nama" value="{{ old('nama') }}" required>
-                        @error('nama') <p style="color: red;">{{ $message }}</p> @enderror
-                
-                        <label>NIM:</label>
-                        <input type="text" name="nim" value="{{ old('nim') }}" required>
-                        @error('nim') <p style="color: red;">{{ $message }}</p> @enderror
-                
-                        <label>Password:</label>
-                        <input type="password" name="password" required>
-                        @error('password') <p style="color: red;">{{ $message }}</p> @enderror
-                
-                        <label>Role:</label>
-                        <select name="role" required>
-                            <option value="Admin">Admin</option>
-                            <option value="Sekretaris">Sekretaris</option>
-                            <option value="Bendahara">Bendahara</option>
-                            <option value="Kominfo">Kominfo</option>
-                        </select>
-                        @error('role') <p style="color: red;">{{ $message }}</p> @enderror
-                
-                        <button type="submit">Simpan</button>
-                    </form>
-
-            
-                </div>
-            </main>
-        </div> --}}
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl font-bold text-gray-800 pb-6">Tambah User</h1>

@@ -17,29 +17,29 @@ class DatabaseSeeder extends Seeder
     {
         $users = [
             [
-                'nama' => 'Admin BEM',
-                'nim' => '22.31.0001',
+                'nama' => 'Adm',
+                'nim' => '22.31.0789',
                 // 'username' => '22.31.0001',
                 'password' => Hash::make('admin'),
                 'role' => 'Admin',
             ],
             [
-                'nama' => 'Sekretaris BEM',
-                'nim' => '22.31.0002',
+                'nama' => 'SekretM',
+                'nim' => '22.31.1202',
                 // 'username' => '22.31.0002',
                 'password' => Hash::make('sekretaris'),
                 'role' => 'Sekretaris',
             ],
             [
-                'nama' => 'Bendahara BEM',
-                'nim' => '22.31.0003',
+                'nama' => 'BendEM',
+                'nim' => '22.31.6903',
                 // 'username' => '22.31.0003',
                 'password' => Hash::make('bendahara'),
                 'role' => 'Bendahara',
             ],
             [
-                'nama' => 'Kominfo BEM',
-                'nim' => '22.31.0004',
+                'nama' => 'Kom BEM',
+                'nim' => '22.31.7694',
                 // 'username' => '22.31.0004',
                 'password' => Hash::make('kominfo'),
                 'role' => 'Kominfo',

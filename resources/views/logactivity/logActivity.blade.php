@@ -2,7 +2,8 @@
 @section('head')
 <title>BEM | Admin Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     .font-family-karla { font-family: karla; }
     .bg-sidebar { background: #3d68ff; }
@@ -23,62 +24,46 @@
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
-
-        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-            <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Log Activity</h1>
-
-                <div class="w-full mt-6">
+        <div class="w-full border-t flex flex-col">
+            <main class="w-full flex-grow ">
+                <!-- Sticky Section for Title and List User -->
+                <div class=" bg-white p-6 shadow-md">
+                    
                     <div class="flex justify-between mb-5">
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> Log Activity
                         </p>
-                        {{-- <button data-modal-toggle="add-penghargaan-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            <i class="ri-add-line mr-3 text-lg"></i> Add
-                        </button> --}}
                     </div>
-
-                    <div class="bg-white overflow-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-800 text-white">
-                                <tr>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    {{-- <th class="py-3 px-4 uppercase font-semibold text-sm text-center">User</th> --}}
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Log Name</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Activity</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Timestamps</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
-                                @foreach ($logs as $log)
+                </div>
+            </main>
+        </div>
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow ">
+        
+                <!-- Table Section -->
+                <div class="sticky w-full h-screen  bg-white  ">
+                    <table class="min-w-full bg-white">
+                        <!-- Sticky Table Header -->
+                        <thead class="sticky bg-gray-800 text-white -top-0 ">
+                            <tr>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Log Name</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Activity</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Timestamps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($logs as $log)
                                 <tr>
                                     <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
                                     <td class="text-center py-3 px-4">{{ $log->log_name }}</td>
-                                    {{-- <td >{{ $log->causer ? $log->causer->name : 'System' }}</td> --}}
                                     <td class="text-center py-3 px-4">{{ $log->description }}</td>
                                     <td class="text-center py-3 px-4">{{ $log->created_at }}</td>
                                 </tr>
                                 @endforeach
-                            </tbody>
 
-                            {{-- <tbody class="text-gray-700">
-                                @foreach ($logs as $log)
-                                    <tr>
-                                        <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
-                                        <td class="text-center py-3 px-4">{{ $log->user->nama }} ({{ $log->user->nim }})</td>
-                                        <td class="text-center py-3 px-4">{{ $log->activity }}</td>
-                                        <td class="text-center py-3 px-4">{{ $log->timestamp }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody> --}}
-
-                           
-                        </table>
-                    </div>
-
-                    <div class="mt-6">
-                        {{-- {{ $penghargaans->links() }} --}}
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </main>
         </div>
