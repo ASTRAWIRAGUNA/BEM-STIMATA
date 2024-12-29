@@ -29,7 +29,7 @@
             <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl text-black pb-6 text-bold">Dashboard</h1>
 
-                <div  class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div  class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <!-- Card Total Barang-->
                     <div class="bg-white shadow rounded-lg p-6">

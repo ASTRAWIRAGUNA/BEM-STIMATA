@@ -32,23 +32,26 @@
                 
                 
 
-                <form action="{{ route('inventories.update', $inventory->id) }}" method="POST">
+                <form action="{{ route('inventories.update', $inventory->id) }}"  class="bg-white shadow-md rounded px-8 py-6" method="POST">
                     @csrf
                     @method('PUT')
             
                     <div class="mb-3">
                         <label for="item_name">Nama Barang</label>
-                        <input type="text" name="item_name" id="item_name" class="form-control" value="{{ $inventory->item_name }}" required>
+                        <input type="text" name="item_name" id="item_name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                         value="{{ $inventory->item_name }}" required>
                     </div>
             
                     <div class="mb-3">
                         <label for="category">Kategori</label>
-                        <input type="text" name="category" id="category" class="form-control" value="{{ $inventory->category }}" required>
+                        <input type="text" name="category" id="category" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                         value="{{ $inventory->category }}" required>
                     </div>
             
                     <div class="mb-3">
                         <label for="availability_status">Status Ketersediaan</label>
-                        <select name="availability_status" id="availability_status" class="form-control" required>
+                        <select name="availability_status" id="availability_status" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                         required>
                             <option value="Available" {{ $inventory->availability_status == 'Available' ? 'selected' : '' }}>Tersedia</option>
                             <option value="Unavailable" {{ $inventory->availability_status == 'Unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
                         </select>
@@ -56,13 +59,14 @@
             
                     <div class="mb-3">
                         <label for="requires_letter">Memerlukan Surat</label>
-                        <select name="requires_letter" id="requires_letter" class="form-control" required>
+                        <select name="requires_letter" id="requires_letter" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                         required>
                             <option value="1" {{ $inventory->requires_letter ? 'selected' : '' }}>Ya</option>
                             <option value="0" {{ !$inventory->requires_letter ? 'selected' : '' }}>Tidak</option>
                         </select>
                     </div>
             
-                    <button type="submit" class="btn btn-primary">Perbarui</button>
+                    <button type="submit" class="w-full block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Perbarui</button>
                 </form>
                
 

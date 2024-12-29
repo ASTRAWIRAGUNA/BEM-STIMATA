@@ -13,8 +13,10 @@ class KominfoController extends Controller
 {
 
     public function dashboard() {
+        $totalbarang = Inventory::count();
+        $totalpeminjaman = Peminjaman::count();
        
-        return view('kominfo.dashboardKominfo');
+        return view('kominfo.dashboardKominfo', compact('totalbarang', 'totalpeminjaman'));
         
         
     }

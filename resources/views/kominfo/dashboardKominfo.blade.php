@@ -28,42 +28,33 @@
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Master Penghargaan</h1>
+                <h1 class="text-3xl text-black pb-6 text-bold">Dashboard</h1>
 
-                <div class="w-full mt-6">
-                    <div class="flex justify-between mb-5">
-                        <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List Penghargaan
-                        </p>
-                        <button data-modal-toggle="add-penghargaan-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            <i class="ri-add-line mr-3 text-lg"></i> Add Penghargaan
-                        </button>
+                <div  class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card Total Barang-->
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-semibold text-gray-700">Total Barang</h3>
+                                <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                  </svg> 
+                                </div>  
+                            </div>
+                            <div class="text-3xl font-bold text-blue-500">{{$totalbarang ?? '0'}}</div>
                     </div>
 
-                    <div class="bg-white overflow-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-800 text-white">
-                                <tr>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Image Achivement</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Name Achivement</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
-                                
-                                <tr>
-                                    <td class="text-center py-3 px-4"></td>
-                                    <td class="text-center py-3 px-4 flex justify-center"></td>
-                                    <td class="text-center py-3 px-4"></td>
-                                    <td class="text-center py-3 px-4"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="mt-6">
-                        {{-- {{ $penghargaans->links() }} --}}
+                    <!-- Card Peminjaman-->
+                    <div class="bg-white shadow rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                                <h3 class="text-lg font-semibold text-gray-700">Total Peminjaman</h3>
+                                <div class="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                  </svg> 
+                                </div>  
+                            </div>
+                            <div class="text-3xl font-bold text-blue-500">{{$totalpeminjaman ?? '0'}}</div>
                     </div>
                 </div>
             </main>

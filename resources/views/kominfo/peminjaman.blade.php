@@ -22,65 +22,67 @@
 @section('body')
 <div class="flex">
     @include('partials.sidebarKominfo')
-
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
-
+        <div class="w-full border-t flex flex-col">
+            <main class="w-full flex-grow ">
+                <div class=" bg-white p-6 shadow-md">
+                    <h1 class="text-3xl text-black pb-6 text-bold">Peminjaman Kominfo</h1>
+    
+                    <div class="w-full mt-6">
+                        <div class="flex justify-between mb-5">
+                            <p class="text-xl pb-3 flex items-center">
+                                <i class="ri-list-check mr-2"></i> List Peminjaman
+                            </p>
+                            <a href="{{ route('peminjaman.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Add Peminjaman
+                            </a>
+                        </div>
+                    </div>
+    
+                </div>
+            </main>
+        </div>
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-            <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Master Penghargaan</h1>
-
-                <div class="w-full mt-6">
-                    <div class="flex justify-between mb-5">
-                        <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List Penghargaan
-                        </p>
-                        <a href="{{ route('peminjaman.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
-                            <i class="ri-add-line mr-3 text-lg"></i> Add Peminjaman
-                        </a>
-                    </div>
-
-                    <div class="bg-white overflow-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-800 text-white">
-                                <tr>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Peminjam</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Peminjam</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Status</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
-                                @forelse ($peminjaman as $item)
-                                <tr>
-                                    <td class="text-center py-3 px-4">{{ $item->id }}</td>
-                                    <td class="text-center py-3 px-4">{{ $item->inventory->item_name  }}</td>
-                                    <td class="text-center py-3 px-4">{{ $item->user->nama }}</td>
-                                    <td class="text-center py-3 px-4">{{ $item->borrow_date }}</td>
-                                    <td class="text-center py-3 px-4">{{ $item->status }}</td>
-                                    <td>
-                                        <a href="{{ route('peminjaman.edit', $item->id) }}">Edit</a>
-                                        <form action="{{ route('peminjaman.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Hapus Item ini?')">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="6" class="text-center">Tidak ada Peminjaman.</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="mt-6">
-                        {{-- {{ $penghargaans->links() }} --}}
-                    </div>
+            <main class="w-full flex-grow ">
+                <div class="sticky w-full h-screen  bg-white">
+                    <table class="min-w-full bg-white">
+                        <thead class="bg-gray-800 text-white">
+                            <tr>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Peminjam</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Peminjam</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Status</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            @forelse ($peminjaman as $item)
+                            <tr>
+                                <td class="text-center py-3 px-4">{{ $item->id }}</td>
+                                <td class="text-center py-3 px-4">{{ $item->inventory->item_name  }}</td>
+                                <td class="text-center py-3 px-4">{{ $item->user->nama }}</td>
+                                <td class="text-center py-3 px-4">{{ $item->borrow_date }}</td>
+                                <td class="text-center py-3 px-4">{{ $item->status }}</td>
+                                <td class="text-center py-3 px-4">
+                                    <a href="{{ route('peminjaman.edit', $item->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
+                                        <i class="fas fa-edit"></i></a>
+                                    <form action="{{ route('peminjaman.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Hapus Item ini?')" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
+                                            <i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada Peminjaman.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </main>
         </div>

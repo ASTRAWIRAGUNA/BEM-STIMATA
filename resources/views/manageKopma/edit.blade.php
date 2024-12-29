@@ -34,7 +34,7 @@
                     
                     {{-- <h1>Tambah User</h1> --}}
 
-                    <form action="{{ route('bendahara.update', $kopma->id) }}" method="POST" class="bg-white shadow-md rounded px-8 py-6 ">
+                    <form action="{{ route('bendahara.update', $kopma->id) }}" method="POST" class="bg-white shadow-md rounded px-8 py-6">
                         @csrf
                         @method('PUT')
                         <div class="mb-3 ">

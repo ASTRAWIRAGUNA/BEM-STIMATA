@@ -41,17 +41,17 @@
                 
                         <div class="mb-3">
                             <label for="item_name" class="block text-sm font-medium text-gray-700">Nama Barang</label>
-                            <input type="text" name="item_name" id="item_name" class="form-control" required>
+                            <input type="text" name="item_name" id="item_name" class="block w-full mt-1 rounded border-gray-300"  required>
                         </div>
                 
                         <div class="mb-3">
                             <label for="category" class="block text-sm font-medium text-gray-700">Kategori</label>
-                            <input type="text" name="category" id="category" class="form-control" required>
+                            <input type="text" name="category" id="category" class="block w-full mt-1 rounded border-gray-300" required>
                         </div>
                 
                         <div class="mb-3" >
                             <label for="availability_status" class="block text-sm font-medium text-gray-700">Status Ketersediaan</label>
-                            <select name="availability_status" id="availability_status" class="form-control" required>
+                            <select name="availability_status" id="availability_status" class="block w-full mt-1 rounded border-gray-300" required>
                                 <option value="Available">Tersedia</option>
                                 <option value="Unavailable">Tidak Tersedia</option>
                             </select>
@@ -59,13 +59,13 @@
                 
                         <div class="mb-3">
                             <label for="requires_letter" class="block text-sm font-medium text-gray-700">Memerlukan Surat</label>
-                            <select name="requires_letter" id="requires_letter" class="form-control" required>
+                            <select name="requires_letter" id="requires_letter"class="block w-full mt-1 rounded border-gray-300" required>
                                 <option value="1">Ya</option>
                                 <option value="0">Tidak</option>
                             </select>
                         </div>
                 
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Simpan</button>
                     </form>
 
             

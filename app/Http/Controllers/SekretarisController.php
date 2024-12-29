@@ -13,8 +13,10 @@ class SekretarisController extends Controller
 {
 
     public function dashboard() {
+
+        $totalsurat = Arsip_surat::count();
        
-        return view('sekertaris.dashboardSekertaris');
+        return view('sekertaris.dashboardSekertaris', compact('totalsurat'));
         
         
     }

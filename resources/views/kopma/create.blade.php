@@ -53,7 +53,8 @@
                                 <!-- Dropdown untuk memilih item Kopma -->
                                 <div class="form-group flex flex-col sm:flex-row sm:justify-between">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
-                                    <select name="kopma_id[]" class="form-control" required>
+                                    <select name="kopma_id[]" 
+                                    class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
                                         <option value="" class="text-center" disabled selected>Pilih Item</option>
                                         @foreach($kopmas as $kopma)
                                             <option value="{{ $kopma->id }}" data-price ="{{ $kopma->item_price }}">
@@ -66,29 +67,33 @@
                                 <!-- Input untuk jumlah -->
                                 <div class="form-group mt-2 flex flex-col sm:flex-row sm:justify-between">
                                     <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="form-control quantity"  required >
+                                    <input type="number" name="quantity[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"  required >
                                 </div>
                                 
                             </div>
-                            <button type="button" id="add-item" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 p-2 item-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >Tambah Item</button>
+                            <button type="button" id="add-item" class="block  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 p-2 item-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Tambah Item</button>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                             <!-- Input untuk jumlah pembayaran -->
                         <div class="form-group mt-2 flex justify-between">
                             <label for="payment">Jumlah Pembayaran</label>
-                            <input type="number" name="payment" id="payment" class="form-control" value="0" min="0" required>
+                            <input type="number" name="payment" id="payment" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                             value="0" min="0" required>
                         </div>
                     
                         <!-- Menampilkan Total Harga dan Kembalian -->
                         <div class="form-group mt-2 flex justify-between">
                             <label>Total Harga</label>
-                            <input type="text" id="total_price" class="form-control" value="Rp. 0" disabled>
+                            <input type="text" id="total_price" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                             value="Rp. 0" disabled>
                         </div>
                     
                         <div class="form-group mt-2 flex justify-between">
                             <label>Kembalian</label>
-                            <input type="text" id="change" class="form-control" value="Rp. 0" disabled>
+                            <input type="text" id="change" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                             value="Rp. 0" disabled>
                         </div>
                         </div>
                     
@@ -149,9 +154,10 @@
                             newItemRow.classList.add('item-row');
                     
                             newItemRow.innerHTML = `
-                                <div class="form-group mt-2 flex flex-col sm:flex-row sm:justify-between">
+                                <div class="form-group mt-6 flex flex-col sm:flex-row sm:justify-between">
                                     <label for="kopma_id[]">Pilih Item Kopma</label>
-                                    <select name="kopma_id[]" class="form-control mt-2 text-center" required>
+                                    <select name="kopma_id[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                     required>
                                         <option value="" disabled selected>Pilih Item</option>
                                         @foreach($kopmas as $kopma)
                                             <option value="{{ $kopma->id }}" 
@@ -165,9 +171,11 @@
                     
                                 <div class="form-group  mt-2 flex flex-col sm:flex-row sm:justify-between ">
                                     <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="form-control quantity "  required >
+                                    <input type="number" name="quantity[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                      required >
                                 </div>
-                                <button type="button" class="btn btn-danger remove-item  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 items-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Hapus</button>
+                                <button type="button" class="btn btn-danger remove-item text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 items-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
+                                    Cancel</button>
                             `;
                     
                             itemsContainer.appendChild(newItemRow);
