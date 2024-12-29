@@ -23,7 +23,7 @@
         class="flex items-center  text-white py-4 pl-6 nav-item
         {{ (request()->is('logKopma')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
             <i class="fas fa-sticky-note mr-3"></i>
-            LOG KOPMA DODOLAN
+            LOG Kopma
         </a>
         <a href="{{ route('penjualan') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item
