@@ -21,7 +21,15 @@
 @endsection
 @section('body')
 <div class="flex">
-    @include('partials.sidebarAdmin')
+    @if(auth()->user()->role == 'Admin')
+    @include('partials.sidebarAdmin') <!-- Sidebar untuk Admin -->
+@elseif(auth()->user()->role == 'Sekretaris')
+    @include('partials.sidebarSekertaris') <!-- Sidebar untuk Sekretaris -->
+@elseif(auth()->user()->role == 'Bendahara')
+    @include('partials.sidebarBendahara') <!-- Sidebar untuk Bendahara -->
+@elseif(auth()->user()->role == 'Kominfo')
+    @include('partials.sidebarKominfo') <!-- Sidebar untuk Kominfo -->
+@endif
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
@@ -56,25 +64,26 @@
                         <div class="col mb-3">
                             <label class="form-label">Nama</label>
                             <!-- Container untuk input dan ikon edit -->
-                            <div class="flex items-center">
+                            <div class="relative">
                                 <input 
                                     type="text" 
                                     name="nama" 
                                     id="nama" 
-                                    class="form-control border p-2 rounded-md w-full" 
+                                    class="form-control border p-2 rounded-md w-full pr-10" 
                                     placeholder="Nama" 
                                     value="{{ old('nama', $user->nama) }}" 
                                     readonly
                                 >
-                                <!-- Icon edit -->
-                                <button 
-                                    type="button" 
+                                <!-- Ikon Edit di dalam input -->
+                                <span 
                                     id="editNamaBtn" 
-                                    class="ml-2 text-blue-500 hover:text-blue-700"
+                                    class="absolute inset-y-0 right-3 flex items-center text-blue-500 cursor-pointer"
                                 >
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                    <!-- Ikon Edit -->
+                                    <i class="fas fa-edit" id="editIcon"></i>
+                                </span>
                             </div>
+                            
                             @error('nama')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -84,7 +93,7 @@
                             <input 
                                 type="text" 
                                 name="nim" 
-                                class="form-control" 
+                                class="form-control border p-2 rounded-md w-full"
                                 placeholder="NIM" 
                                 value="{{ old('nim', $user->nim) }}" 
                                 readonly
@@ -95,7 +104,7 @@
                             <input 
                                 type="text" 
                                 name="role" 
-                                class="form-control" 
+                                class="form-control border p-2 rounded-md w-full" 
                                 placeholder="Role" 
                                 value="{{ old('role', $user->role) }}" 
                                 readonly
@@ -104,36 +113,33 @@
                     </div>
                     <!-- Tombol simpan perubahan -->
                     <div class="mt-4">
-                        <button type="submit" class="btn btn-primary" id="saveBtn" style="display: none;">
+                        <button type="submit" class="btn btn-primary w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-4 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="saveBtn" style="display: none;">
                             Save
                         </button>
                     </div>
+                    <script>
+                        const namaInput = document.getElementById('nama');
+                        const editNamaBtn = document.getElementById('editNamaBtn');
+                        const saveBtn = document.getElementById('saveBtn');
+                    
+                        // Event listener untuk tombol edit
+                        editNamaBtn.addEventListener('click', function() {
+                            // Jika input dalam keadaan readonly, maka ubah jadi bisa diedit
+                            if (namaInput.readOnly) {
+                                namaInput.readOnly = false;
+                                namaInput.focus(); // Fokuskan input setelah diubah
+                                editNamaBtn.innerHTML = ''; // Ubah ikon menjadi save
+                                saveBtn.style.display = 'inline-block'; // Tampilkan tombol simpan
+                            } else {
+                                // Simpan perubahan ketika tombol save diklik
+                                saveBtn.style.display = 'none'; // Sembunyikan tombol simpan
+                                editNamaBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Kembalikan ikon ke edit
+                            }
+                        });
+                    </script>
                 </form>
             </main>
         </div>
-        
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        
-        <script>
-            const namaInput = document.getElementById('nama');
-            const editNamaBtn = document.getElementById('editNamaBtn');
-            const saveBtn = document.getElementById('saveBtn');
-        
-            // Event listener untuk tombol edit
-            editNamaBtn.addEventListener('click', function() {
-                // Jika input dalam keadaan readonly, maka ubah jadi bisa diedit
-                if (namaInput.readOnly) {
-                    namaInput.readOnly = false;
-                    namaInput.focus(); // Fokuskan input setelah diubah
-                    editNamaBtn.innerHTML = '<i class="fas fa-save"></i>'; // Ubah ikon menjadi save
-                    saveBtn.style.display = 'inline-block'; // Tampilkan tombol simpan
-                } else {
-                    // Simpan perubahan ketika tombol save diklik
-                    saveBtn.style.display = 'none'; // Sembunyikan tombol simpan
-                    editNamaBtn.innerHTML = '<i class="fas fa-edit"></i>'; // Kembalikan ikon ke edit
-                }
-            });
-        </script>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
