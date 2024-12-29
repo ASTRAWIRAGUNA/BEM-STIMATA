@@ -27,76 +27,18 @@
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
-
-        {{-- <div class="w-full h-screen overflow-x-hidden border-t flex flex-col ">
-            
-            <main class="w-full flex-grow p-6">
-                
-                <h1 class="text-3xl text-black pb-6 text-bold">Master </h1>
-                <div class="w-full mt-6">
-                    <div class="flex justify-between mb-5 sticky top-0">
-                        <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List User
-                        </p>
-                        <a href="{{ route('manageuser.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
-                            <i class="ri-add-line mr-3 text-lg"></i> Add User
-                        </a>
-                    </div>
-                    
-                    @if (session('success'))
-                        <p style="color: green;">{{ session('success') }}</p>
-                        @endif
-
-                    <div class="bg-white overflow-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-800 text-white sticky top-0">
-                                <tr>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nim</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Role</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
-                                </tr>
-                            
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
-                                            <td class="text-center py-3 px-4">{{ $user->nama }}</td>
-                                            <td class="text-center py-3 px-4">{{ $user->nim }}</td>
-                                            <td class="text-center py-3 px-4">{{ $user->role }}</td>
-                                            <td class="text-center py-3 px-4">
-                                                
-                                                <!-- Detail Icon -->
-                                                <a href="{{ route('manageuser.show', $user->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Detail">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                 <!-- Edit Icon -->
-                                                <a href="{{ route('manageuser.edit', $user->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                
-                                                 <!-- Delete Icon -->
-                                                <form action="{{ route('manageuser.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus user ini?')" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            
-                        </table>
-                    </div>
-                </div>
-                
-            </main>
-        </div> --}}
         <div class="w-full border-t flex flex-col">
             <main class="w-full flex-grow ">
+                @if (session('success'))
+<div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">Success!</strong>
+    <span class="block sm:inline">{{ session('success') }}</span>
+    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').remove();">
+        <span class="text-green-500">&times;</span>
+    </button>
+</div>
+@endif
+
                 <!-- Sticky Section for Title and List User -->
                 <div class=" bg-white p-6 shadow-md">
                     <h1 class="text-3xl text-black pb-3 font-bold">Master</h1>
@@ -104,16 +46,12 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List User
                         </p>
-                        <a href="{{ route('manageuser.create') }}" 
+                        <a href="{{ route('admin.manageuser.create') }}" 
                            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             <i class="ri-add-line mr-3 text-lg"></i> Add User
                         </a>
                     </div>
                 </div>
-                
-                @if (session('success'))
-                    <p style="color: green;">{{ session('success') }}</p>
-                @endif
             </main>
         </div>
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
@@ -141,15 +79,15 @@
                                     <td class="text-center py-3 px-4">{{ $user->role }}</td>
                                     <td class="text-center py-3 px-4">
                                         <!-- Detail Icon -->
-                                        <a href="{{ route('manageuser.show', $user->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Detail">
+                                        <a href="{{ route('admin.manageuser.show', $user->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Detail">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <!-- Edit Icon -->
-                                        <a href="{{ route('manageuser.edit', $user->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
+                                        <a href="{{ route('admin.manageuser.edit', $user->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- Delete Icon -->
-                                        <form action="{{ route('manageuser.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('admin.manageuser.destroy', $user->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Hapus user ini?')" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
@@ -164,6 +102,16 @@
                 </div>
             </main>
         </div>
+        <script>
+            // Notifikasi otomatis hilang setelah 3 detik
+            setTimeout(() => {
+                const alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.classList.add('opacity-0'); // Tambahkan kelas untuk transparansi
+                    setTimeout(() => alert.remove(), 500); // Hapus elemen setelah transisi selesai
+                }
+            }, 3000); // Durasi notifikasi 3 detik
+        </script>
         
     </div>
 </div>

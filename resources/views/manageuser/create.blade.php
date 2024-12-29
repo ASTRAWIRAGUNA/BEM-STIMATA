@@ -29,7 +29,7 @@
                 <h1 class="text-3xl font-bold text-gray-800 pb-6">Tambah User</h1>
         
                 <div class="w-full mt-6 bg-white rounded-lg shadow-md p-6">
-                    <form action="{{ route('manageuser.store') }}" method="POST" class="space-y-4">
+                    <form action="{{ route('admin.manageuser.store') }}" method="POST" class="space-y-4">
                         @csrf
         
                         <!-- Nama -->

@@ -12,8 +12,7 @@
             </button>
             <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
             <div x-show="isOpen" class="absolute right-0 w-48 bg-white rounded-lg shadow-lg py-2 mt-16">
-                <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
-                <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                <a href="{{ route('account.detail') }}" class="block px-4 py-2 account-link hover:text-white">Account</a>
                 <form action="/logout" method="post" class="block w-full">
                     @csrf
                     <button type="submit" class="w-full text-left px-4 py-2 account-link hover:text-white">Logout</button>

@@ -12,7 +12,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         switch ($user->role) {
             case 'Admin':
-                return redirect()->route('dashboardAdmin');
+                return redirect()->route('admin.dashboardAdmin');
             case 'Sekretaris':
                return redirect()->route('dashboardSekretaris');
             case 'Bendahara':

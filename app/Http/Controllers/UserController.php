@@ -39,7 +39,7 @@ class UserController extends Controller
         ]);
        
 
-        return redirect()->route('manageuser')->with('success', 'User berhasil ditambahkan!');
+        return redirect()->route('admin.manageuser.index')->with('success', 'User berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -69,7 +69,7 @@ class UserController extends Controller
         ]);
        
 
-        return redirect()->route('manageuser')->with('success', 'User berhasil diperbarui!');
+        return redirect()->route('admin.manageuser.index')->with('success', 'User berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -77,7 +77,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         
-        return redirect()->route('manageuser')->with('success', 'User berhasil dihapus!');
+        return redirect()->route('admin.manageuser.index')->with('success', 'User berhasil dihapus!');
     }
 
     public function show($id)

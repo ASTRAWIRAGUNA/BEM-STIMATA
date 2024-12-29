@@ -2,16 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LogActivityController;
-use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\KominfoController;
-use App\Http\Controllers\BendaharaController;
-use App\Http\Controllers\PenjualanKopmaController;
-use App\Http\Controllers\SekretarisController;
 use App\Http\Controllers\LogKopmaController;
+use App\Http\Controllers\BendaharaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\SekretarisController;
+use App\Http\Controllers\LogActivityController;
+use App\Http\Controllers\PenjualanKopmaController;
 
 // Login
 Route::get('/', function ()  {
@@ -33,24 +34,34 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route Admin sebelum dirapikan
+    // Route::middleware('checkrole:Admin')->group(function () {
+    //     // Routes khusus untuk Admin
 
-    Route::middleware('checkrole:Admin')->group(function () {
-        // Routes khusus untuk Admin
-
-        //route dashboard
-        Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('dashboardAdmin');
+    //     //route dashboard
+    //     Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('dashboardAdmin');
 
 
-        //route manageuser
-        Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
-        Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
-        Route::post('/manageuser', [UserController::class, 'store'])->name('manageuser.store');
-        Route::get('/manageuser/{id}/edit', [UserController::class, 'edit'])->name('manageuser.edit');
-        Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
-        Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
-        Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
+    //     //route manageuser
+    //     Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
+    //     Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
+    //     Route::post('/manageuser', [UserController::class, 'store'])->name('manageuser.store');
+    //     Route::get('/manageuser/{id}/edit', [UserController::class, 'edit'])->name('manageuser.edit');
+    //     Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
+    //     Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
+    //     Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
         
-        //route LOG
+    //     //route LOG
+    //     Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
+    // });
+
+    Route::get('/account', [AccountController::class, 'detail'])->name('account.detail');
+    Route::put('/account', [AccountController::class, 'update'])->name('account.update');
+
+
+    Route::middleware(['checkrole:Admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboardAdmin');
+        Route::resource('manageuser', UserController::class);
         Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
     });
 

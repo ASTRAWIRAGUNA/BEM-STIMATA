@@ -7,6 +7,7 @@ use Spatie\Activitylog\LogOptions;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -36,50 +37,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
-    // public function peminjaman()
-    // {
-    //     return $this->hasMany(Peminjaman::class, 'id');
-    // }
-
-    
-
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
-
-    // inverse one to Many ke tabel role
-    // public function role() {
-    //     return $this->belongsTo(Role::class, 'role_id');
-    // }
-
-    // public function logActivities()
-    // {
-    //     return $this->hasMany(LogActivity::class);
-    // }
-
-    // public function absensis()
-    // {
-    //     return $this->hasMany(Absensi::class);
-    // }
-
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
-
-    // public function pendaftaranUkms()
-    // {
-    //     return $this->hasMany(PendaftaranUKM::class);
-    // }
-
-    // public function userUkms()
-    // {
-    //     return $this->belongsToMany(UKM::class, 'user_ukms');
-    // }
-
-    // public function peminjamans()
-    // {
-    //     return $this->hasMany(Peminjaman::class, 'penanggung_jawab');
-    // }
 }

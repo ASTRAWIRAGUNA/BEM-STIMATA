@@ -3,21 +3,21 @@
         <a href="#" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
     </div>
     <nav class="text-white text-base font-semibold pt-3">
-        <a href="{{ route('dashboardAdmin') }}" 
+        <a href="{{ route('admin.dashboardAdmin') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item
-        {{ (request()->is('dashboardAdmin')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
+        {{ (request()->routeIs('admin.dashboardAdmin')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
             <i class="fas fa-tachometer-alt mr-3"></i>
             Dashboard
         </a>
-        <a href="{{ route('manageuser') }}" 
+        <a href="{{ route('admin.manageuser.index') }}" 
         class="flex items-center text-white py-4 pl-6 nav-item
-        {{ (request()->is('manageuser')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
+        {{ (request()->routeIs('admin.manageuser.index')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
             <i class="fas fa-sticky-note mr-3"></i>
             Manage User
         </a>
-        <a href="{{ route('logactivity') }}" 
+        <a href="{{ route('admin.logactivity') }}" 
         class="flex items-center text-white py-4 pl-6 nav-item
-        {{ (request()->is('logactivity')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
+        {{ (request()->routeIs('admin.logactivity')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
             <i class="fas fa-table mr-3"></i>
             Log Activity
         </a>
