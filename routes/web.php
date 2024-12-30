@@ -10,9 +10,11 @@ use App\Http\Controllers\LogKopmaController;
 use App\Http\Controllers\BendaharaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\KeuanganKopmaController;
 use App\Http\Controllers\SekretarisController;
 use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\PenjualanKopmaController;
+use App\Models\Keuangan;
 
 // Login
 Route::get('/', function ()  {
@@ -98,6 +100,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penjualan/{penjualan}/edit', [PenjualanKopmaController::class, 'edit'])->name('penjualan.edit');
         Route::put('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'update'])->name('penjualan.update');
         Route::delete('/penjualan/{penjualan}', [PenjualanKopmaController::class, 'destroy'])->name('penjualan.destroy');
+        //keuangan kopma
+        Route::get('/keuangan', [KeuanganKopmaController::class, 'index'])->name('keuangan');
+        Route::get('/keuangan/create', [KeuanganKopmaController::class, 'create'])->name('keuangan.create');
+        Route::post('/keuangan', [KeuanganKopmaController::class, 'store'])->name('keuangan.store');
         //logKopma
         Route::get('/logKopma', [LogKopmaController::class, 'index'])->name('logKopma');
     });

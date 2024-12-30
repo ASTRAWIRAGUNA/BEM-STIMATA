@@ -17,6 +17,12 @@ class Order extends Model
         'total_amount',
     ];
 
+    // Accessor untuk deskripsi
+    public function getKeteranganAttribute()
+    {
+        return "Order dari User ID " . $this->user_id;
+    }
+
     /**
      * Relasi ke model User (Many-to-One).
      */
