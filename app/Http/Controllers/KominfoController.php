@@ -24,7 +24,7 @@ class KominfoController extends Controller
     {
          // Ambil semua data inventory
         //  $inventories = Inventory::all();
-        $peminjaman = Peminjaman::with('inventory', 'user', 'surat')->get();
+        $peminjaman = Peminjaman::with('inventory', 'surat')->get();
         return view('kominfo.peminjaman', compact('peminjaman'));
     }
 
@@ -33,15 +33,14 @@ class KominfoController extends Controller
         // $inventories = Inventory::where('availability_status', 'Available')->get();
         $inventories = Inventory::all();
         $surats = Arsip_surat::all();
-        $users = User::all(); // Semua user
-        return view('kominfo.peminjaman.create', compact('inventories', 'surats','users'));
+        return view('kominfo.peminjaman.create', compact('inventories', 'surats'));
     }
 
     public function store(Request $request)
     {
          // Validasi awal
     $request->validate([
-        'user_id' => 'required|exists:users,id', // Pastikan user ID valid 
+        'nama_peminjam' => 'required|string|max:255', // Pastikan user ID valid 
         'inventory_id' => 'required|exists:inventories,id',
         'borrow_date' => 'required|date',
         'return_date' => 'required|date|after:borrow_date', // Pastikan tanggal pengembalian setelah tanggal pinjam
@@ -69,7 +68,7 @@ class KominfoController extends Controller
     Peminjaman::create([
         'inventory_id' => $request->inventory_id,
         // 'user_id' => Auth::id(), // gunakan ini agar hanya 1 orang saja yang bisa meminjam
-        'user_id' => $request->user_id, //semua user bisa meminjam
+        'nama_peminjam' => $request->nama_peminjam, //nama peminjam
         'surat_id' => $request->surat_id,
         'borrow_date' => $request->borrow_date,
         'return_date' => $request->return_date,
@@ -141,19 +140,8 @@ class KominfoController extends Controller
             activity()
                 ->causedBy(Auth::user())
                 ->performedOn($peminjaman)
-                ->logName('Update_Peminjaman')
+                // ->logName('Update_Peminjaman')
                 ->log('Peminjaman diperbarui');
-
-        // $request->validate([
-        //     'status' => 'required|in:Pending,Approved,Returned',
-        // ]);
-
-        // if ($request->status == 'Returned') {
-        //     $inventory = $peminjaman->inventory;
-        //     $inventory->update(['availability_status' => 'Available']);
-        // }
-
-        // $peminjaman->update(['status' => $request->status]);
 
         return redirect()->route('peminjaman')->with('success', 'Status peminjaman berhasil diperbarui!');
     }

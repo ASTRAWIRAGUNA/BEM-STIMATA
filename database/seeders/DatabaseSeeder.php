@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $users = [
             [
                 'nama' => 'Adm',
-                'nim' => '22.31.0789',
+                'nim' => '22.31.0001',
                 // 'username' => '22.31.0001',
                 'password' => Hash::make('admin'),
                 'role' => 'Admin',

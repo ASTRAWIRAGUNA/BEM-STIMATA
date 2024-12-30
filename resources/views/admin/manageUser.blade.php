@@ -30,14 +30,14 @@
         <div class="w-full border-t flex flex-col">
             <main class="w-full flex-grow ">
                 @if (session('success'))
-<div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-    <strong class="font-bold">Success!</strong>
-    <span class="block sm:inline">{{ session('success') }}</span>
-    <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').remove();">
-        <span class="text-green-500">&times;</span>
-    </button>
-</div>
-@endif
+                    <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').remove();">
+                            <span class="text-green-500">&times;</span>
+                        </button>
+                    </div>
+                    @endif
 
                 <!-- Sticky Section for Title and List User -->
                 <div class=" bg-white p-6 shadow-md">
@@ -58,10 +58,10 @@
             <main class="w-full flex-grow ">
         
                 <!-- Table Section -->
-                <div class="sticky w-full h-screen  bg-white  ">
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table class="min-w-full bg-white">
                         <!-- Sticky Table Header -->
-                        <thead class="sticky bg-gray-800 text-white -top-0 ">
+                        <thead class="sticky top-0 bg-gray-800 text-white">
                             <tr>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama</th>
@@ -111,6 +111,7 @@
                     setTimeout(() => alert.remove(), 500); // Hapus elemen setelah transisi selesai
                 }
             }, 3000); // Durasi notifikasi 3 detik
+            
         </script>
         
     </div>

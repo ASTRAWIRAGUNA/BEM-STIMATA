@@ -19,11 +19,7 @@ return new class extends Migration
                 ->on('inventories')
                 ->onDelete('cascade');
         
-            $table->unsignedBigInteger('user_id'); // Foreign Key ke users
-            $table->foreign('user_id')
-                ->references('id') // Default kolom primary key laravel
-                ->on('users')
-                ->onDelete('cascade');
+            $table->string('nama_peminjam')->nullable(); // Kolom untuk nama peminjam
         
             $table->unsignedBigInteger('surat_id')->nullable(); // Foreign Key ke arsip_surats
             $table->foreign('surat_id')

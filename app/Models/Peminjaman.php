@@ -16,7 +16,7 @@ class Peminjaman extends Model
     protected $fillable = [
         // 'peminjaman_id',
         'inventory_id',
-        'user_id',
+        'nama_peminjam',
         'surat_id',
         'borrow_date',
         'return_date',
@@ -29,11 +29,7 @@ class Peminjaman extends Model
         return $this->belongsTo(Inventory::class,'inventory_id');
     }
 
-    // Relasi ke user
-    public function user()
-    {
-        return $this->belongsTo(User::class,'user_id');
-    }
+   
 
     // Relasi ke arsip surat
     public function surat()

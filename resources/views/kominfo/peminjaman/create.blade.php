@@ -67,16 +67,19 @@
                 
                         <!-- Pilih User -->
                         <div class="mb-4">
-                            <label for="user_id" class="block text-sm font-medium text-gray-700">Peminjam</label>
-                            <select name="user_id" id="user_id" class="block w-full mt-1 rounded border-gray-300" required>
-                                <option value="" disabled selected>Pilih User</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->nama }}
-                                        {{ $user->role }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <label for="nama_peminjam" class="block text-sm font-medium text-gray-700">Peminjam</label>
+                            <input 
+                                type="text" 
+                                name="nama_peminjam" 
+                                id="nama_peminjam" 
+                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm" 
+                                placeholder="Masukkan nama peminjam" 
+                                value="{{ old('nama_peminjam') }}" 
+                                required
+                            >
+                            @error('nama_peminjam')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                 
                         <!-- Tanggal Peminjaman -->
