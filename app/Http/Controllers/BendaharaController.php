@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kopma;
 use App\Models\OrderItem;
 use App\Models\Order;
+use App\Models\UangKeluar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,8 +17,10 @@ class BendaharaController extends Controller
         $totalbarang = Kopma::count();
         $totalpenjualan = OrderItem::count();
         $totalpendapatan = Order::sum('total_amount');
+        $totalpengeluaran = UangKeluar::sum('jumlah');
+
        
-        return view('bendahara.dashboardBendahara',  compact('totalbarang', 'totalpenjualan', 'totalpendapatan'));
+        return view('bendahara.dashboardBendahara',  compact('totalbarang', 'totalpenjualan', 'totalpendapatan', 'totalpengeluaran'));
     } 
         
 

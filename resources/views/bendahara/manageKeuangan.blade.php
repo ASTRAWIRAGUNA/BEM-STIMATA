@@ -25,48 +25,57 @@
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
-
-        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
-            <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Master Penghargaan</h1>
-
-                <div class="w-full mt-6">
-                    <div class="flex justify-between mb-5">
-                        <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List Penghargaan
-                        </p>
-                        <button data-modal-toggle="add-penghargaan-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                            <i class="ri-add-line mr-3 text-lg"></i> Add Penghargaan
-                        </button>
-                    </div>
-
-                    <div class="bg-white overflow-auto">
+    
+            <div class="w-full border-t flex flex-col">
+                <main class="w-full flex-grow ">
+                    <div class=" bg-white p-6 shadow-md">
+                        <h1 class="text-3xl text-black pb-6 text-bold">Keuangan </h1>
+                        <div class="flex justify-between mb-5">
+                            <p class="text-xl pb-3 flex items-center">
+                                <i class="ri-list-check mr-2"></i> Total Pendapatan
+                                <div class="text-3xl font-bold text-blue-500">Rp.{{ number_format($totalPendapatan ?? 0, 0, ',', '.') }}</div>
+                            </p>
+                            <a href="{{ route('keuangan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Uang Keluar
+                            </a>
+                        </div>
+                        @if (session('success'))
+                            <p style="color: green;">{{ session('success') }}</p>
+                        @endif
+    
+                    </div>   
+                </main>
+            </div>
+            <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+                <main class="w-full flex-grow ">
+                    <div class="sticky w-full h-screen  bg-white">
                         <table class="min-w-full bg-white">
-                            <thead class="bg-gray-800 text-white">
-                                <tr>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Image Achivement</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Name Achivement</th>
-                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700">
+                            <thead class="sticky bg-gray-800 text-white -top-0 ">
                                 
                                 <tr>
-                                    <td class="text-center py-3 px-4"></td>
-                                    <td class="text-center py-3 px-4 flex justify-center"></td>
-                                    <td class="text-center py-3 px-4"></td>
-                                    <td class="text-center py-3 px-4"></td>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Kategori</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Keterangan</th>
+                                    <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Jumlah</th>
                                 </tr>
-                            </tbody>
+                                
+                                <tbody>
+                                    @foreach($keuangan as $key => $item)
+                                        <tr>
+                                            <td class="text-center py-3 px-4">{{ $key + 1 }}</td>
+                                            <td class="text-center py-3 px-4">{{ $item->tanggal }}</td>
+                                            <td class="text-center py-3 px-4">{{ $item->tipe }}</td>
+                                            <td class="text-center py-3 px-4">{{ $item->keterangan }}</td>
+                                            <td class="text-center py-3 px-4">Rp. {{ number_format($item->jumlah, 2) }}</td>
+                                        </tr>
+                                        @endforeach
+                                </tbody>
+                            
                         </table>
+    
                     </div>
-
-                    <div class="mt-6">
-                        {{-- {{ $penghargaans->links() }} --}}
-                    </div>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
 </div>
