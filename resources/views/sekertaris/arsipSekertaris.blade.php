@@ -26,38 +26,46 @@
         @include('partials.headers')
         <div class="w-full border-t flex flex-col">
             <main class="w-full flex-grow ">
+                @if (session('success'))
+                    <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').remove();">
+                            <span class="text-green-500">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                <!-- Sticky Section for Title and List User -->
                 <div class=" bg-white p-6 shadow-md">
-                    <h1 class="text-3xl text-black pb-6 text-bold">Daftar Arsip Surat</h1>
+                    <h1 class="text-3xl text-black pb-3 font-bold">Arsip Surat</h1>
                     <div class="flex justify-between mb-5">
                         <p class="text-xl pb-3 flex items-center">
-                            <i class="ri-list-check mr-2"></i> List Arsip Surat
+                            <i class="ri-list-check mr-2"></i> List Surat
                         </p>
-                        @if($canExport)
-                        <a href="{{ route('arsipSurat.export') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
-                            <i class="ri-add-line mr-3 text-lg"></i> Export Excel
-                        </a>
-                        @else
-                        <a href="{{ route('arsipSurat.export') }}" button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" disabled>
-                            <i class="ri-add-line mr-3 text-lg"></i> Export Excel
-                        </button>
-                        @endif
-                        <a href="{{ route('arsipSurat.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
-                            <i class="ri-add-line mr-3 text-lg"></i> Tambah Surat
-                        </a>
-                    </div>  
-                    @if (session('success'))
-                        <p style="color: green;">{{ session('success') }}</p>
-                        @else(session('error'))
-                        <p style="color: red;">{{ session('error') }}</p>
-                        @endif
+                        <div class="flex space-x-4">
+                            @if($canExport)
+                            <a href="{{ route('arsipSurat.export') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Export Excel
+                            </a>
+                            @else
+                            <a href="{{ route('arsipSurat.export') }}" button class="block text-white bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center" type="button" disabled>
+                                <i class="ri-add-line mr-3 text-lg"></i> Export Excel
+                            </button>
+                            @endif
+                            <a href="{{ route('arsipSurat.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                                <i class="ri-add-line mr-3 text-lg"></i> Tambah Surat
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow ">
-                <div class="sticky w-full h-screen  bg-white">
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table class="min-w-full bg-white">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="sticky top-0 bg-gray-800 text-white">
                             <tr>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Judul</th>
@@ -73,11 +81,13 @@
                                 <td class="text-center py-3 px-4">{{ $letter->title }}</td>
                                 <td class="text-center py-3 px-4">{{ $letter->description }}</td>
                                 <td class="text-center py-3 px-4">{{ $letter->date }}</td>
-                                <td>
+                                <td class="text-center py-3 px-4">
                                     <form action="{{ route('arsipSurat.destroy', $letter) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus surat ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        <button type="submit" class="text-red-500 hover:text-red-700 mx-1" title="Hapus">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>   
                                     </form>
                                 </td>
                             </tr>
@@ -91,6 +101,17 @@
                 </div>
             </main>
         </div>
+        <script>
+            // Notifikasi otomatis hilang setelah 3 detik
+            setTimeout(() => {
+                const alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.classList.add('opacity-0'); // Tambahkan kelas untuk transparansi
+                    setTimeout(() => alert.remove(), 500); // Hapus elemen setelah transisi selesai
+                }
+            }, 3000); // Durasi notifikasi 3 detik
+            
+        </script>
 
     </div>
 </div>

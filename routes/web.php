@@ -36,27 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Route Admin sebelum dirapikan
-    // Route::middleware('checkrole:Admin')->group(function () {
-    //     // Routes khusus untuk Admin
-
-    //     //route dashboard
-    //     Route::get('/dashboardAdmin', [AdminController::class, 'index'])->name('dashboardAdmin');
-
-
-    //     //route manageuser
-    //     Route::get('/manageuser', [UserController::class, 'index'])->name('manageuser');
-    //     Route::get('/manageuser/create', [UserController::class, 'create'])->name('manageuser.create');
-    //     Route::post('/manageuser', [UserController::class, 'store'])->name('manageuser.store');
-    //     Route::get('/manageuser/{id}/edit', [UserController::class, 'edit'])->name('manageuser.edit');
-    //     Route::put('/manageuser/{id}', [UserController::class, 'update'])->name('manageuser.update');
-    //     Route::delete('/manageuser/{id}', [UserController::class, 'destroy'])->name('manageuser.destroy');
-    //     Route::get('/manageuser/{id}', [UserController::class, 'show'])->name('manageuser.show');
-        
-    //     //route LOG
-    //     Route::get('/logactivity', [LogActivityController::class, 'index'])->name('logactivity');
-    // });
-
+    //Detail Account
     Route::get('/account', [AccountController::class, 'detail'])->name('account.detail');
     Route::put('/account', [AccountController::class, 'update'])->name('account.update');
 

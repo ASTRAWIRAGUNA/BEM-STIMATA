@@ -16,19 +16,19 @@
             Manage Kopma
         </a>
         <a href="{{ route('keuangan') }}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-            <i class="fas fa-align-left mr-3"></i>
+            <i class='fas fa-money-bill-wave mr-3'></i>
             Keuangan
         </a>
         <a href="{{ route('logKopma') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item
         {{ (request()->is('logKopma')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
-            <i class="fas fa-sticky-note mr-3"></i>
+        <i class='fas fa-chart-bar mr-3'></i>
             LOG Kopma
         </a>
         <a href="{{ route('penjualan') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item
         {{ (request()->is('penjualan')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
-            <i class="fas fa-sticky-note mr-3"></i>
+        <i class="fa-solid fa-laptop mr-3"></i>
             POS Kopma
         </a>
     </nav>

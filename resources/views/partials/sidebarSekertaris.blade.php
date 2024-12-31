@@ -12,7 +12,7 @@
         <a href="{{ route('arsipSurat') }}" 
         class="flex items-center  text-white py-4 pl-6 nav-item
         {{ (request()->is('arsipSurat')) ? 'active-nav-link' : 'opacity-75 hover:opacity-100' }}">
-            <i class="fas fa-sticky-note mr-3"></i>
+        <i class='fas fa-file-alt mr-3'></i>
             Arsip Surat
         </a>
         <a href="blank.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">

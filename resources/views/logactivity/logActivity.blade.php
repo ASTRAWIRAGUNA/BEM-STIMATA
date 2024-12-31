@@ -28,7 +28,7 @@
             <main class="w-full flex-grow ">
                 <!-- Sticky Section for Title and List User -->
                 <div class=" bg-white p-6 shadow-md">
-                    
+                    <h1 class="text-3xl text-black pb-3 font-bold">LOG</h1>
                     <div class="flex justify-between mb-5">
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> Log Activity
@@ -41,10 +41,10 @@
             <main class="w-full flex-grow ">
         
                 <!-- Table Section -->
-                <div class="sticky w-full h-screen  bg-white  ">
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table class="min-w-full bg-white">
                         <!-- Sticky Table Header -->
-                        <thead class="sticky bg-gray-800 text-white -top-0 ">
+                        <thead class="sticky bg-gray-800 text-white top-0 ">
                             <tr>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Log Name</th>

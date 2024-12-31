@@ -63,13 +63,11 @@
                 
                         <!-- Tombol Simpan -->
                         <div>
-                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600">
+                            <button type="submit" class="btn btn-primary w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-4 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Simpan Surat
                             </button>
                         </div>
                     </form>
-
-            
                 </div>
             </main>
         </div>

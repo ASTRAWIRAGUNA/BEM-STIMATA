@@ -3,6 +3,8 @@
 <title>Fairus | Admin Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+{{-- icon --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
     .font-family-karla { font-family: karla; }
     .bg-sidebar { background: #3d68ff; }
@@ -30,23 +32,23 @@
                 <div class="row">
                     <div class="col mb-3">
                         <label class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $user->nama }}" readonly>
+                        <input type="text" name="nama" class="form-control border p-2 rounded-md w-full" placeholder="Nama" value="{{ $user->nama }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">NIM</label>
-                        <input type="text" name="nim" class="form-control" placeholder="NIM" value="{{ $user->nim }}" readonly>
+                        <input type="text" name="nim" class="form-control border p-2 rounded-md w-full" placeholder="NIM" value="{{ $user->nim }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Role</label>
-                        <input type="text" name="role" class="form-control" placeholder="Role" value="{{ $user->role}}" readonly>
+                        <input type="text" name="role" class="form-control border p-2 rounded-md w-full" placeholder="Role" value="{{ $user->role}}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Created At</label>
-                        <input type="text" name="created_at" class="form-control" placeholder="Created At" value="{{ $user->created_at }}" readonly>
+                        <input type="text" name="created_at" class="form-control border p-2 rounded-md w-full"placeholder="Created At" value="{{ $user->created_at }}" readonly>
                     </div>
                     <div class="col mb-3">
                         <label class="form-label">Updated At</label>
-                        <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $user->updated_at }}" readonly>
+                        <input type="text" name="updated_at" class="form-control border p-2 rounded-md w-full" placeholder="Updated At" value="{{ $user->updated_at }}" readonly>
                     </div>
                 </div>
             </main>
