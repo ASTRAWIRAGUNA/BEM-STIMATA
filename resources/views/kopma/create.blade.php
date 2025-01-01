@@ -104,108 +104,86 @@
                     </form>
                     
                     <script>
-                        const itemsContainer = document.getElementById('items-container');
-                        const addItemButton = document.getElementById('add-item');
-                        const paymentInput = document.getElementById('payment');
-                        const totalPriceInput = document.getElementById('total_price');
-                        const changeInput = document.getElementById('change');
-                            // Fungsi untuk menghitung total harga dan kembalian
-                        function calculateTotal() {
-                            let totalPrice = 0;
-                            let payment = parseInt(paymentInput.value);
-                            let errorMessages = [];
-                            // Iterasi semua item yang dipilih
-                            const itemRows = document.querySelectorAll('.item-row');
-                            itemRows.forEach(row => {
-                                const quantityInput = row.querySelector('.quantity');
-                                const kopmaSelect = row.querySelector('select');
-                                const pricePerUnit = parseInt(kopmaSelect.options[kopmaSelect.selectedIndex].getAttribute('data-price'));
-                                const maxStock = parseInt(kopmaSelect.options[kopmaSelect.selectedIndex].getAttribute('data-stock'));
-                                const quantity = parseInt(quantityInput.value);
+                        document.addEventListener('DOMContentLoaded', () => {
+    const itemsContainer = document.getElementById('items-container');
+    const addItemButton = document.getElementById('add-item');
+    const paymentInput = document.getElementById('payment');
+    const totalPriceInput = document.getElementById('total_price');
+    const changeInput = document.getElementById('change');
 
-                                 // Validasi stok barang
-                                if (quantity > maxStock) {
-                                    errorMessages.push(`Jumlah pesanan untuk item '${kopmaSelect.options[kopmaSelect.selectedIndex].text}' melebihi stok tersedia (${maxStock}).`);
-                                    quantityInput.classList.add('border-red-500');
-                                } else {
-                                    quantityInput.classList.remove('border-red-500');
-                                }
-                                totalPrice += pricePerUnit * quantity;
-                            });
-            
-                            // Hitung kembalian
-                            totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
-                            const change = payment - totalPrice;
-                            changeInput.value = 'Rp. ' + change.toLocaleString('id-ID'); // Format Rupiah
-                             // Tampilkan pesan error jika ada
-                                const errorContainer = document.getElementById('error-container');
-                                errorContainer.innerHTML = '';
-                                if (errorMessages.length > 0) {
-                                    errorMessages.forEach(message => {
-                                        const errorElement = document.createElement('div');
-                                        errorElement.classList.add('text-red-500', 'mb-2');
-                                        errorElement.innerText = message;
-                                        errorContainer.appendChild(errorElement);
-                                    });
-                                }
-                        }
-                        // Fungsi untuk menambahkan baris item
-                        addItemButton.addEventListener('click', () => {
-                            const newItemRow = document.createElement('div');
-                            newItemRow.classList.add('item-row');
-                    
-                            newItemRow.innerHTML = `
-                                <div class="form-group mt-6 flex flex-col sm:flex-row sm:justify-between">
-                                    <label for="kopma_id[]">Pilih Item Kopma</label>
-                                    <select name="kopma_id[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                     required>
-                                        <option value="" disabled selected>Pilih Item</option>
-                                        @foreach($kopmas as $kopma)
-                                            <option value="{{ $kopma->id }}" 
-                                                data-price="{{ $kopma->item_price }}" 
-                                                data-stock="{{ $kopma->quantity }}">
-                                                {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                    
-                                <div class="form-group  mt-2 flex flex-col sm:flex-row sm:justify-between ">
-                                    <label for="quantity[]">Jumlah</label>
-                                    <input type="number" name="quantity[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                      required >
-                                </div>
-                                <button type="button" class="btn btn-danger remove-item text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3  mt-2 items-center py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
-                                    Cancel</button>
-                            `;
-                    
-                            itemsContainer.appendChild(newItemRow);
-                            const removeButton = newItemRow.querySelector('.remove-item');
-    removeButton.addEventListener('click', () => {
-        newItemRow.remove();
-        calculateTotal(); // Perbarui total jika ada perubahan
+    // Fungsi untuk menghitung total harga dan kembalian
+    function calculateTotal() {
+        let totalPrice = 0;
+        const itemRows = document.querySelectorAll('.item-row');
+
+        itemRows.forEach(row => {
+            const quantityInput = row.querySelector('input[name="quantity[]"]');
+            const kopmaSelect = row.querySelector('select[name="kopma_id[]"]');
+            const pricePerUnit = parseInt(kopmaSelect.options[kopmaSelect.selectedIndex]?.getAttribute('data-price')) || 0;
+            const quantity = parseInt(quantityInput.value) || 0;
+
+            totalPrice += pricePerUnit * quantity;
+        });
+
+        totalPriceInput.value = 'Rp. ' + totalPrice.toLocaleString('id-ID'); // Format Rupiah
+
+        const payment = parseInt(paymentInput.value) || 0;
+        const change = payment - totalPrice;
+
+        changeInput.value = 'Rp. ' + change.toLocaleString('id-ID'); // Format Rupiah
+    }
+
+    // Tambahkan event listener untuk input perubahan
+    itemsContainer.addEventListener('input', (e) => {
+        if (e.target.matches('select[name="kopma_id[]"], input[name="quantity[]"]')) {
+            calculateTotal();
+        }
     });
-                            
-                        });
-                            
-                            // Validasi sebelum submit form
-                                const form = document.querySelector('form');
-                                form.addEventListener('submit', (e) => {
-                                    calculateTotal();
-                                    const hasError = document.querySelector('.border-red-500');
-                                    if (hasError) {
-                                        e.preventDefault();
-                                        alert('Terdapat kesalahan pada pesanan Anda. Silakan perbaiki sebelum mengirimkan.');
-                                    }
-                                });
 
-                            // Hitung total dan kembalian setiap kali input diubah
-                            itemsContainer.addEventListener('input', calculateTotal);
-                            paymentInput.addEventListener('input', calculateTotal);
-                        
-                            // Hitung total awal
-                            calculateTotal();
-                    </script>
+    paymentInput.addEventListener('input', calculateTotal);
+
+    // Fungsi untuk menambahkan baris item baru
+    addItemButton.addEventListener('click', () => {
+        const newItemRow = document.createElement('div');
+        newItemRow.classList.add('item-row');
+
+        newItemRow.innerHTML = `
+            <div class="form-group flex flex-col sm:flex-row sm:justify-between mt-4">
+                <label for="kopma_id[]">Pilih Item Kopma</label>
+                <select name="kopma_id[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+                    <option value="" disabled selected>Pilih Item</option>
+                    @foreach($kopmas as $kopma)
+                        <option value="{{ $kopma->id }}" data-price="{{ $kopma->item_price }}">
+                            {{ $kopma->item_name }} - Rp. {{ number_format($kopma->item_price, 0, ',', '.') }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group flex flex-col sm:flex-row sm:justify-between mt-2">
+                <label for="quantity[]">Jumlah</label>
+                <input type="number" name="quantity[]" class="mt-1 block w-30 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
+            </div>
+
+            <button type="button" class="remove-item text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 mt-2 py-1">
+                Hapus Item
+            </button>
+        `;
+
+        itemsContainer.appendChild(newItemRow);
+
+        const removeButton = newItemRow.querySelector('.remove-item');
+        removeButton.addEventListener('click', () => {
+            newItemRow.remove();
+            calculateTotal();
+        });
+    });
+
+    // Hitung total awal
+    calculateTotal();
+});
+
+                        </script>
                 </div>
             </main>
         </div>

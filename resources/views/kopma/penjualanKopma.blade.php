@@ -25,8 +25,33 @@
 
     <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         @include('partials.headers')
-
         <div class="w-full border-t flex flex-col">
+            <main class="w-full flex-grow ">
+                @if (session('success'))
+                    <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="document.getElementById('success-alert').remove();">
+                            <span class="text-green-500">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+
+                <!-- Sticky Section for Title and List User -->
+                <div class=" bg-white p-6 shadow-md">
+                    <h1 class="text-3xl text-black pb-3 font-bold">Daftar Penjualan</h1>
+                    <div class="flex justify-between mb-5">
+                        <p class="text-xl pb-3 flex items-center">
+                            <i class="ri-list-check mr-2"></i> List Penjualan Kopma
+                        </p>
+                        <a href="{{ route('penjualan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
+                            <i class="ri-add-line mr-3 text-lg"></i> Tambah Penjualan
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
+        {{-- <div class="w-full border-t flex flex-col">
             <main class="w-full flex-grow ">
                 <div class=" bg-white p-6 shadow-md">
                     <h1 class="text-3xl text-black pb-6 text-bold">Daftar Penjualan </h1>
@@ -46,10 +71,10 @@
                     @endif
                 </div>
             </main>
-        </div>
+        </div> --}}
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow ">
-                <div class="sticky w-full h-screen  bg-white">
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table class="min-w-full bg-white">
                         <thead class="bg-gray-800 text-white">
                             <tr>
@@ -78,6 +103,17 @@
                 </div>
             </main>
         </div>
+        <script>
+            // Notifikasi otomatis hilang setelah 3 detik
+            setTimeout(() => {
+                const alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.classList.add('opacity-0'); // Tambahkan kelas untuk transparansi
+                    setTimeout(() => alert.remove(), 500); // Hapus elemen setelah transisi selesai
+                }
+            }, 3000); // Durasi notifikasi 3 detik
+            
+        </script>
     </div>
 </div>
 

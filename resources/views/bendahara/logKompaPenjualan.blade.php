@@ -27,6 +27,21 @@
         @include('partials.headers')
         <div class="w-full border-t flex flex-col">
             <main class="w-full flex-grow ">
+                
+
+                <!-- Sticky Section for Title and List User -->
+                <div class=" bg-white p-6 shadow-md">
+                    <h1 class="text-3xl text-black pb-3 font-bold">Log Activity Kopma</h1>
+                    <div class="flex justify-between mb-5">
+                        <p class="text-xl pb-3 flex items-center">
+                            <i class="ri-list-check mr-2"></i> List Log Kopma                    
+                        </p>
+                    </div>
+                </div>
+            </main>
+        </div>
+        {{-- <div class="w-full border-t flex flex-col">
+            <main class="w-full flex-grow ">
                 <div class=" bg-white p-6 shadow-md">
                     <h1 class="text-3xl text-black pb-6 text-bold">Log Activity Kopma</h1>
                     <div class="flex justify-between mb-5">
@@ -37,11 +52,11 @@
 
                 </div>
             </main>
-        </div>
+        </div> --}}
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow ">
-                <div class="sticky w-full h-screen  bg-white">
+                <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table  class="min-w-full bg-white">
                         <thead class="sticky bg-gray-800 text-white -top-0 ">
                             <tr>
