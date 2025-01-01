@@ -76,7 +76,7 @@
             <main class="w-full flex-grow ">
                 <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
                     <table class="min-w-full bg-white">
-                        <thead class="bg-gray-800 text-white">
+                        <thead class="sticky -top-0 bg-gray-800 text-white">
                             <tr>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
