@@ -1,6 +1,8 @@
 @extends('base')
 
 @section('head')
+<link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png">
+<title>BEM | Login Page</title>
     <!-- Tambahkan custom CSS jika diperlukan -->
 @endsection
 

@@ -1,6 +1,7 @@
 @extends('base')
 @section('head')
-<title>Fairus | Admin Page</title>
+<link rel="icon" href="{{ asset('images/logo/favicon.png') }}" type="image/png">
+<title>BEM | Bendahara Page</title>
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
 {{-- icon --}}
