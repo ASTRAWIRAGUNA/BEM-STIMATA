@@ -44,10 +44,16 @@ class KominfoController extends Controller
         'inventory_id' => 'required|exists:inventories,id',
         'borrow_date' => 'required|date',
         'return_date' => 'required|date|after:borrow_date', // Pastikan tanggal pengembalian setelah tanggal pinjam
+        'initial_condition_photo' => 'required|image|max:2048',
     ]);
+
 
     // Ambil data inventory
     $inventory = Inventory::find($request->inventory_id);
+    // Validasi stok barang
+    if ($inventory->stock <= 0) {
+        return back()->with('error', 'Stok barang habis, tidak dapat dipinjam.');
+    }
 
     // Validasi apakah barang memerlukan surat
     if ($inventory->requires_letter) {
@@ -56,14 +62,20 @@ class KominfoController extends Controller
         ]);
     }
 
-    // Pastikan barang masih tersedia
-    if ($inventory->availability_status === 'Unavailable') {
-        return back()->with(['error' , 'Barang ini sedang tidak tersedia untuk dipinjam.']);
-    }
+    // // Pastikan barang masih tersedia
+    // if ($inventory->availability_status === 'Unavailable') {
+    //     return back()->with(['error' , 'Barang ini sedang tidak tersedia untuk dipinjam.']);
+    // }
 
-    // Update status barang menjadi tidak tersedia
-    $inventory->update(['availability_status' => 'Unavailable']);
+    // // Update status barang menjadi tidak tersedia
+    // $inventory->update(['availability_status' => 'Unavailable']);
+     
 
+    // Simpan foto kondisi awal
+    $initialPhotoPath = $request->file('initial_condition_photo')->store('initial_condition_photos', 'public');
+
+    // Kurangi stok barang
+    $inventory->decreaseStock();
     // Simpan data peminjaman
     Peminjaman::create([
         'inventory_id' => $request->inventory_id,
@@ -73,6 +85,7 @@ class KominfoController extends Controller
         'borrow_date' => $request->borrow_date,
         'return_date' => $request->return_date,
         'status' => 'Pending', // Status awal peminjaman
+        'initial_condition_photo' => $initialPhotoPath,
     ]);
 
     // Log aktivitas
@@ -105,6 +118,8 @@ class KominfoController extends Controller
                 'inventory_id' => 'required|exists:inventories,id',
                 'status' => 'required|in:Pending,Approved,Returned',
                 'surat_id' => 'nullable|exists:arsip_surats,id', // Surat bisa null jika tidak diperlukan
+                'return_condition' => 'required_if:status,Returned|string',
+                'comments' => 'nullable|string',
             ]);
 
             // Ambil data inventory yang dipilih
@@ -114,20 +129,58 @@ class KominfoController extends Controller
             if ($inventory->requires_letter && !$request->surat_id) {
                 return redirect()->back()->withErrors(['surat_id' => 'Barang ini memerlukan surat peminjaman.']);
             }
+            //  // Jika status menjadi Returned
+            // if ($request->status == 'Returned') {
+            //     // Tambahkan stok barang
+            //     $inventory->increaseStock();
 
-            // Jika status diperbarui menjadi Returned
-            if ($request->status == 'Returned') {
-                $inventory->update(['availability_status' => 'Available']); // Set barang menjadi tersedia
-            }
+            //     // Perbarui data pengembalian
+            //     $peminjaman->update([
+            //         'status' => $request->status,
+            //         'return_condition' => $request->return_condition,
+            //         'comments' => $request->comments,
+            //     ]);
+            // } else {
+            //     $peminjaman->update([
+            //         'status' => $request->status,
+            //     ]);
+            // }
 
-            // Jika barang berubah, perbarui status barang lama dan baru
-            if ($peminjaman->inventory_id != $request->inventory_id) {
-                // Set barang lama menjadi tersedia
-                $peminjaman->inventory->update(['availability_status' => 'Available']);
+            // // Jika status diperbarui menjadi Returned
+            // if ($request->status == 'Returned') {
+            //     $inventory->update(['availability_status' => 'Available']); // Set barang menjadi tersedia
+            // }
 
-                // Set barang baru menjadi tidak tersedia
-                $inventory->update(['availability_status' => 'Unavailable']);
-            }
+            // // Jika barang berubah, perbarui status barang lama dan baru
+            // if ($peminjaman->inventory_id != $request->inventory_id) {
+            //     // Set barang lama menjadi tersedia
+            //     $peminjaman->inventory->update(['availability_status' => 'Available']);
+
+            //     // Set barang baru menjadi tidak tersedia
+            //     $inventory->update(['availability_status' => 'Unavailable']);
+            // }
+
+             // Jika barang berubah, perbarui stok barang lama dan baru
+    if ($peminjaman->inventory_id != $request->inventory_id) {
+        $peminjaman->inventory->increaseStock(); // Tambahkan stok barang lama
+        $inventory->decreaseStock(); // Kurangi stok barang baru
+    }
+
+    // Jika status menjadi Returned
+    if ($request->status === 'Returned') {
+        $inventory->increaseStock(); // Tambahkan stok barang
+        $peminjaman->update([
+            'status' => $request->status,
+            'return_condition' => $request->return_condition,
+            'comments' => $request->comments,
+        ]);
+    } else {
+        $peminjaman->update([
+            'inventory_id' => $request->inventory_id,
+            'status' => $request->status,
+            'surat_id' => $request->surat_id,
+        ]);
+    }
 
             // Perbarui peminjaman
             $peminjaman->update([
@@ -145,11 +198,36 @@ class KominfoController extends Controller
 
         return redirect()->route('peminjaman')->with('success', 'Status peminjaman berhasil diperbarui!');
     }
+    public function return($id)
+{
+    $peminjaman = Peminjaman::findOrFail($id);
+
+    // Validasi apakah status sudah 'Approved'
+    if ($peminjaman->status != 'Approved') {
+        return redirect()->route('peminjaman.index')->with('error', 'Pengembalian hanya bisa diproses untuk barang yang disetujui.');
+    }
+
+    // Perbarui status menjadi 'Returned'
+    $peminjaman->update([
+        'status' => 'Returned',
+        'return_date' => now(), // Atur tanggal pengembalian otomatis
+    ]);
+
+    // Tambahkan stok barang kembali
+    $inventory = $peminjaman->inventory;
+    $inventory->increaseStock();
+
+    // Perbarui status ketersediaan barang
+    $inventory->update(['availability_status' => 'Available']);
+
+    return redirect()->route('peminjaman')->with('success', 'Barang berhasil dikembalikan.');
+}
 
     public function destroy(Peminjaman $peminjaman)
     {
         $inventory = $peminjaman->inventory;
-        $inventory->update(['availability_status' => 'Available']);
+        // Kembalikan stok barang
+    $inventory->increaseStock();
         $peminjaman->delete();
 
         return redirect()->route('peminjaman')->with('success', 'Peminjaman berhasil dihapus!');

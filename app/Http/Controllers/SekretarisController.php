@@ -21,10 +21,18 @@ class SekretarisController extends Controller
         
     }
 
-    public function index() {
-        $letters = Arsip_surat::where('user_id', Auth::id())->get(); // Hanya surat milik sekretaris yang login
+    public function index(Request $request) {
+
+        // Ambil parameter bulan dari query string
+        $month = $request->get('month');
+        $letters = Arsip_surat::where('user_id', Auth::id())
+        ->when($month, function ($query, $month) {
+            return $query->whereMonth('date', $month);
+        })->get(); // Hanya surat milik sekretaris yang login
         $canExport = $letters->count() > 0; //info surat yang diekspor
-        return view('sekertaris.arsipSekertaris', compact('letters','canExport'));
+        return view('sekertaris.arsipSekertaris', compact('letters','canExport','month'));
+
+
 
     }
 

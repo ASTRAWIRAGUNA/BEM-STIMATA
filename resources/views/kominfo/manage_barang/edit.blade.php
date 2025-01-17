@@ -48,6 +48,13 @@
                         <input type="text" name="category" id="category" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                          value="{{ $inventory->category }}" required>
                     </div>
+                    <div class="mb-4">
+                        <label for="stock" class="block text-sm font-medium text-gray-700">Stok Barang</label>
+                        <input type="number" name="stock" id="stock" value="{{ old('stock', $inventory->stock) }}" 
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                               min="0" required>
+                    </div>
+                    
             
                     <div class="mb-3">
                         <label for="availability_status">Status Ketersediaan</label>

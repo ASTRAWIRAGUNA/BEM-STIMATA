@@ -11,12 +11,10 @@ class Inventory extends Model
 
     protected $table = 'inventories';
 
-    // protected $primaryKey = 'inventory_id';
-    // protected $primaryKey = 'id';
-
     protected $fillable = [
         'item_name',
         'category',
+        'stock',
         'availability_status',
         'requires_letter',
     ];
@@ -26,4 +24,20 @@ class Inventory extends Model
     {
         return $this->hasMany(Peminjaman::class, 'inventory_id');
     }
+
+     // Metode untuk mengurangi stok
+     public function decreaseStock($quantity = 1)
+     {
+         $this->stock -= $quantity;
+         $this->availability_status = $this->stock > 0 ? 'Available' : 'Unavailable';
+         $this->save();
+     }
+ 
+     // Metode untuk menambah stok
+     public function increaseStock($quantity = 1)
+     {
+         $this->stock += $quantity;
+         $this->availability_status = 'Available'; // Jika barang dikembalikan, status pasti tersedia
+         $this->save();
+     }
 }

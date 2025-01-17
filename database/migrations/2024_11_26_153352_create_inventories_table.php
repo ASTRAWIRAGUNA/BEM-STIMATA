@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id(); // Primary Key
             $table->string('item_name'); // Nama barang
             $table->string('category'); // Kategori barang
+            $table->integer('stock')->default(0); // Tambahkan kolom stok setelah kategori
             $table->enum('availability_status', ['Available', 'Unavailable'])->default('Available'); // Status barang
             $table->boolean('requires_letter')->default(true); // Default barang membutuhkan surat
             $table->timestamps();

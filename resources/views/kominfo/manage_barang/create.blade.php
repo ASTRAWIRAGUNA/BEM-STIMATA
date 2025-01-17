@@ -49,6 +49,12 @@
                             <label for="category" class="block text-sm font-medium text-gray-700">Kategori</label>
                             <input type="text" name="category" id="category" class="block w-full mt-1 rounded border-gray-300" required>
                         </div>
+                        <div class="mb-4">
+                            <label for="stock" class="block text-sm font-medium text-gray-700">Stok Barang</label>
+                            <input type="number" name="stock" id="stock" value="{{ old('stock', 0) }}" 
+                            class="block w-full mt-1 rounded border-gray-300" required>
+                        </div>
+                        
                 
                         <div class="mb-3" >
                             <label for="availability_status" class="block text-sm font-medium text-gray-700">Status Ketersediaan</label>

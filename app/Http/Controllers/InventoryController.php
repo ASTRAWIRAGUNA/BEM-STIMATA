@@ -23,6 +23,7 @@ class InventoryController extends Controller
         $request->validate([
             'item_name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'stock' => 'required|integer|min:0',
             'availability_status' => 'required|in:Available,Unavailable',
             'requires_letter' => 'required|boolean',
         ]);
@@ -42,6 +43,7 @@ class InventoryController extends Controller
         $request->validate([
             'item_name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'stock' => 'required|integer|min:0',
             'availability_status' => 'required|in:Available,Unavailable',
             'requires_letter' => 'required|boolean',
         ]);

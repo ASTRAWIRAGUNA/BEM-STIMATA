@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'nama' => 'SekretM',
-                'nim' => '22.31.1202',
+                'nim' => '22.31.0002',
                 // 'username' => '22.31.0002',
                 'password' => Hash::make('sekretaris'),
                 'role' => 'Sekretaris',

@@ -67,6 +67,7 @@
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Kategori</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Stok</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Status</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Surat Barang</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
@@ -78,6 +79,7 @@
                                 <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
                                 <td class="text-center py-3 px-4">{{ $barang->item_name }}</td>
                                 <td class="text-center py-3 px-4">{{ $barang->category }}</td>
+                                <td class="text-center py-3 px-4">{{ $barang->stock }}</td>
                                 <td class="text-center py-3 px-4">{{ $barang->availability_status }}</td>
                                 <td class="text-center py-3 px-4">{{ $barang->requires_letter ? 'Ya' : 'Tidak' }}</td>
                                 <td class="text-center py-3 px-4">

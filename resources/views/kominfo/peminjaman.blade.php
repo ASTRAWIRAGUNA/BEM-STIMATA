@@ -74,8 +74,17 @@
                                 <td class="text-center py-3 px-4">{{ $item->inventory->item_name  }}</td>
                                 <td class="text-center py-3 px-4">{{ $item->nama_peminjam }}</td>
                                 <td class="text-center py-3 px-4">{{ $item->borrow_date }}</td>
-                                <td class="text-center py-3 px-4">{{ $item->status }}</td>
                                 <td class="text-center py-3 px-4">
+                                    <span class="{{ $item->status == 'Returned' ? 'bg-green-100 text-green-800' : ($item->status == 'Approved' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') }} px-2 py-1 rounded">
+                                        {{ $item->status }}
+                                    </span>
+                                </td>
+                                <td class="text-center py-3 px-4">
+                                    @if ($item->status == 'Approved')
+                                        <a href="{{ route('peminjaman.return', $item->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Proses Pengembalian">
+                                            <i class="fas fa-undo-alt"></i> Kembalikan
+                                        </a>
+                                    @endif
                                     <a href="{{ route('peminjaman.edit', $item->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">
                                         <i class="fas fa-edit"></i></a>
                                     <form action="{{ route('peminjaman.destroy', $item->id) }}" method="POST" style="display:inline;">

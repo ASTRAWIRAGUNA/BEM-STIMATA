@@ -26,7 +26,9 @@ return new class extends Migration
                 ->references('id') // Default kolom primary key laravel
                 ->on('arsip_surats')
                 ->onDelete('cascade');
-        
+            $table->string('initial_condition_photo')->nullable(); // Foto kondisi awal
+            $table->text('return_condition')->nullable(); // Deskripsi kondisi saat pengembalian
+            $table->text('comments')->nullable(); // Komentar untuk kehilangan atau kerusakan barang
             $table->date('borrow_date');
             $table->date('return_date');
             $table->enum('status', ['Pending', 'Approved', 'Returned'])->default('Pending');

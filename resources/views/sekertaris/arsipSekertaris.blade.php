@@ -44,6 +44,19 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List Surat
                         </p>
+                        <form method="GET" action="{{ route('arsipSurat') }}" class="flex space-x-2">
+                            <select name="month" class="border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Pilih Bulan</option>
+                                @foreach(range(1, 12) as $month)
+                                <option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
+                                    {{ \Carbon\Carbon::create()->month($month)->translatedFormat('F') }}
+                                </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800">
+                                Cari
+                            </button>
+                        </form>
                         <div class="flex space-x-4">
                             @if($canExport)
                             <a href="{{ route('arsipSurat.export') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" >
