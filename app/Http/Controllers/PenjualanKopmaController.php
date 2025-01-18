@@ -110,6 +110,8 @@ class PenjualanKopmaController extends Controller
         $kopma->quantity -= $quantity;
         $kopma->save();
     }
+    
+    
 
     return redirect()->route('penjualan')
         ->with('success', 'Pesanan berhasil dibuat.');

@@ -44,6 +44,7 @@
                         <p class="text-xl pb-3 flex items-center">
                             <i class="ri-list-check mr-2"></i> List Penjualan Kopma
                         </p>
+
                         <a href="{{ route('penjualan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
                             <i class="ri-add-line mr-3 text-lg"></i> Tambah Penjualan
                         </a>
@@ -51,27 +52,6 @@
                 </div>
             </main>
         </div>
-        {{-- <div class="w-full border-t flex flex-col">
-            <main class="w-full flex-grow ">
-                <div class=" bg-white p-6 shadow-md">
-                    <h1 class="text-3xl text-black pb-6 text-bold">Daftar Penjualan </h1>
-                    <div class="w-full mt-6">
-                        <div class="flex justify-between mb-5">
-                            <p class="text-xl pb-3 flex items-center">
-                                <i class="ri-list-check mr-2"></i> List Penjualan Kopma
-                            </p>
-                            <a href="{{ route('penjualan.create') }}" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " type="button" >
-                                <i class="ri-add-line mr-3 text-lg"></i> Tambah Penjualan
-                            </a>
-                    </div>
-                    @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                    @elseif(session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-                </div>
-            </main>
-        </div> --}}
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow ">
                 <div class="overflow-y-auto max-h-[calc(100vh-250px)]">
@@ -84,26 +64,22 @@
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Total Harga</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @php
-                                $no = 1; // Variabel manual untuk nomor urut
-                            @endphp
-                            @foreach($orders as $order)
-                                @foreach($order->orderItems as $orderItem)
-                                    <tr>
-                                        <td class="text-center py-3 px-4">{{ $no++ }}</td>
-                                        <td class="text-center py-3 px-4">{{ $orderItem->item_name }}</td>
-                                        <td class="text-center py-3 px-4">{{ $order->order_date }}</td>
-                                        <td class="text-center py-3 px-4">{{ $orderItem->total_price }}</td>
-                                    </tr>
-                                @endforeach
-                            @endforeach
+                        <tbody id="items-table-body">
+                            @foreach ($orders as $order)
+                            <tr>
+                                <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
+                                <td class="text-center py-3 px-4">{{ $order->orderItems->pluck('item_name')->join(', ') }}</td>
+                                <td class="text-center py-3 px-4">{{ $order->order_date }}</td>
+                                <td class="text-center py-3 px-4">Rp. {{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </main>
         </div>
         <script>
+            
             // Notifikasi otomatis hilang setelah 3 detik
             setTimeout(() => {
                 const alert = document.getElementById('success-alert');
@@ -112,10 +88,10 @@
                     setTimeout(() => alert.remove(), 500); // Hapus elemen setelah transisi selesai
                 }
             }, 3000); // Durasi notifikasi 3 detik
-            
         </script>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
