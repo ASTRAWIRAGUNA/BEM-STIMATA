@@ -62,7 +62,8 @@
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">No</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Nama Barang</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Peminjam</th>
-                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Peminjam</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Pinjam</th>
+                                <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Tanggal Pengembalian</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Status</th>
                                 <th class="py-3 px-4 uppercase font-semibold text-sm text-center">Action</th>
                             </tr>
@@ -70,10 +71,18 @@
                         <tbody class="text-gray-700">
                             @forelse ($peminjaman as $item)
                             <tr>
-                                <td class="text-center py-3 px-4">{{ $item->id }}</td>
+                                <td class="text-center py-3 px-4">{{ $loop->iteration }}</td>
                                 <td class="text-center py-3 px-4">{{ $item->inventory->item_name  }}</td>
                                 <td class="text-center py-3 px-4">{{ $item->nama_peminjam }}</td>
+                                {{-- <td class="text-center py-3 px-4">
+                                    @if ($item->initial_condition_photo)
+                                    <img src="{{ asset('storage/' . $item->initial_condition_photo) }}" alt="Kondisi Awal Barang" class="w-16 h-16 object-cover rounded">
+                                @else
+                                    <span class="text-gray-500">Tidak ada gambar</span>
+                                @endif
+                                </td> --}}
                                 <td class="text-center py-3 px-4">{{ $item->borrow_date }}</td>
+                                <td class="text-center py-3 px-4">{{ $item->return_date }}</td>
                                 <td class="text-center py-3 px-4">
                                     <span class="{{ $item->status == 'Returned' ? 'bg-green-100 text-green-800' : ($item->status == 'Approved' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') }} px-2 py-1 rounded">
                                         {{ $item->status }}
@@ -81,8 +90,8 @@
                                 </td>
                                 <td class="text-center py-3 px-4">
                                     @if ($item->status == 'Approved')
-                                        <a href="{{ route('peminjaman.return', $item->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Proses Pengembalian">
-                                            <i class="fas fa-undo-alt"></i> Kembalikan
+                                        <a href="{{ route('peminjaman.pengembalian', $item->id) }}" class="text-blue-500 hover:text-blue-700 mx-1" title="Proses Pengembalian">
+                                            <i class="fas fa-undo-alt"></i>
                                         </a>
                                     @endif
                                     <a href="{{ route('peminjaman.edit', $item->id) }}" class="text-green-500 hover:text-green-700 mx-1" title="Edit">

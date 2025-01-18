@@ -28,9 +28,24 @@ class Inventory extends Model
      // Metode untuk mengurangi stok
      public function decreaseStock($quantity = 1)
      {
-         $this->stock -= $quantity;
-         $this->availability_status = $this->stock > 0 ? 'Available' : 'Unavailable';
-         $this->save();
+         // Validasi stok mencukupi
+    if ($this->stock < $quantity) {
+        throw new \Exception('Stok tidak mencukupi untuk pengurangan ini.');
+    }
+
+    // Kurangi stok
+    $this->stock -= $quantity;
+
+    // Perbarui status ketersediaan
+    $this->availability_status = $this->stock > 0 ? 'Available' : 'Unavailable';
+
+    // Simpan perubahan
+    $this->save();
+
+    // Opsional: Log aktivitas
+    activity()
+        ->performedOn($this)
+        ->log('Stok barang dikurangi sebanyak ' . $quantity);
      }
  
      // Metode untuk menambah stok

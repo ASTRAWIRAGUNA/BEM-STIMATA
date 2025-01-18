@@ -100,7 +100,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/peminjaman', [KominfoController::class, 'store'])->name('peminjaman.store');
         Route::get('/peminjaman/{peminjaman}/edit', [KominfoController::class, 'edit'])->name('peminjaman.edit');
         Route::put('/peminjaman/{peminjaman}', [KominfoController::class, 'update'])->name('peminjaman.update');
-        Route::get('/peminjaman/{id}/return', [KominfoController::class, 'return'])->name('peminjaman.return');
+        Route::put('/peminjaman/{peminjaman}/return', [KominfoController::class, 'return'])->name('peminjaman.return');
+        Route::get('/peminjaman/{peminjaman}/pengembalian', [KominfoController::class, 'pengembalian'])->name('peminjaman.pengembalian');
 
         Route::delete('/peminjaman/{peminjaman}', [KominfoController::class, 'destroy'])->name('peminjaman.destroy');
 

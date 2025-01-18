@@ -33,7 +33,7 @@
                 
                 
 
-                <form action="{{ route('peminjaman.update', $peminjaman->id) }}" class="bg-white shadow-md rounded px-8 py-6" method="POST">
+                <form action="{{ route('peminjaman.return', $peminjaman->id) }}" class="bg-white shadow-md rounded px-8 py-6" method="POST">
                     @csrf
                     @method('PUT')
             
@@ -48,7 +48,7 @@
                         </select>
                     </div>
             
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="surat_id">Surat</label>
                         <select name="surat_id" id="surat_id"  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             <option value="">Tidak Memerlukan Surat</option>
@@ -58,24 +58,24 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
             
                     <div class="mb-3">
                         <label for="status">Status</label>
                         <select name="status" id="status"  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                             {{-- <option value="Pending" {{ $peminjaman->status == 'Pending' ? 'selected' : '' }}>Pending</option> --}}
-                            <option value="Approved" {{ $peminjaman->status == 'Approved' ? 'selected' : '' }}>Approved</option>
-                            {{-- <option value="Returned" {{ $peminjaman->status == 'Returned' ? 'selected' : '' }}>Returned</option> --}}
+                            {{-- <option value="Approved" {{ $peminjaman->status == 'Approved' ? 'selected' : '' }}>Approved</option> --}}
+                            <option value="Returned" {{ $peminjaman->status == 'Returned' ? 'selected' : '' }}>Returned</option>
                         </select>
                     </div>
-                    {{-- <div>
-                        <label for="return_condition">Deskripsi Kondisi Akhir</label>
+                    <div>
+                        <label for="return_condition">Deskripsi Kondisi Akhir</label>w
                         <textarea name="return_condition" required></textarea>
                     </div>
                     <div>
                         <label for="comments">Komentar (Opsional)</label>
                         <textarea name="comments"></textarea>
-                    </div> --}}
+                    </div>
             
                     <button type="submit"  class="w-full block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Perbarui</button>
                 </form>

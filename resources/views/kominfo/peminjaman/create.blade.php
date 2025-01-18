@@ -39,7 +39,7 @@
                     <p style="color: red;">{{ session('error') }}</p>
                     @endif
                      <!-- Form Tambah Peminjaman -->
-                    <form action="{{ route('peminjaman.store') }}" method="POST" class="bg-white shadow-md rounded px-8 py-6">
+                    <form action="{{ route('peminjaman.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 py-6">
                         @csrf
                 
                         <!-- Pilih Barang -->
@@ -93,6 +93,11 @@
                         <div class="mb-4">
                             <label for="return_date" class="block text-sm font-medium text-gray-700">Tanggal Pengembalian</label>
                             <input type="date" name="return_date" id="return_date" class="block w-full mt-1 rounded border-gray-300" required>
+                            <p id="date-error" class="text-red-500 text-sm mt-1 hidden">Tanggal pengembalian harus lebih besar dari tanggal peminjaman.</p>
+                        </div>
+                        <div class="mb-4">
+                            <label for="initial_condition_photo" class="block text-sm font-medium text-gray-700">Foto Kondisi Awal</label>
+                            <input type="file" class="block w-full mt-1 rounded border-gray-300"name="initial_condition_photo" accept="image/*" required>
                         </div>
                 
                         <!-- Tombol Submit -->
@@ -118,6 +123,31 @@
                             suratGroup.classList.add('hidden');
                             document.getElementById('surat_id').value = ''; // Clear surat if not needed
                         }
+                    });
+                </script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const borrowDateInput = document.getElementById('borrow_date');
+                        const returnDateInput = document.getElementById('return_date');
+                        const errorElement = document.getElementById('date-error');
+                
+                        // Fungsi untuk validasi tanggal
+                        function validateDates() {
+                            const borrowDate = new Date(borrowDateInput.value);
+                            const returnDate = new Date(returnDateInput.value);
+                
+                            if (returnDate <= borrowDate) {
+                                errorElement.classList.remove('hidden'); // Tampilkan pesan error
+                                returnDateInput.setCustomValidity('Tanggal pengembalian harus lebih besar dari tanggal peminjaman.');
+                            } else {
+                                errorElement.classList.add('hidden'); // Sembunyikan pesan error
+                                returnDateInput.setCustomValidity(''); // Reset validasi
+                            }
+                        }
+                
+                        // Tambahkan event listener ke input tanggal
+                        borrowDateInput.addEventListener('change', validateDates);
+                        returnDateInput.addEventListener('change', validateDates);
                     });
                 </script>
             </main>
