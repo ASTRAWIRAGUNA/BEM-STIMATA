@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
-use App\Models\Arsip_surat;
-use App\Models\Peminjaman;
+use Carbon\Carbon;
+use App\Notifications\OverdueNotification;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Inventory;
+use App\Models\Peminjaman;
+use App\Models\Arsip_surat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KominfoController extends Controller
 {
@@ -15,17 +17,34 @@ class KominfoController extends Controller
     public function dashboard() {
         $totalbarang = Inventory::count();
         $totalpeminjaman = Peminjaman::count();
+        
        
         return view('kominfo.dashboardKominfo', compact('totalbarang', 'totalpeminjaman'));
         
         
     }
     public function index()
-    {
+    {   
+        
          // Ambil semua data inventory
-        //  $inventories = Inventory::all();
         $peminjaman = Peminjaman::with('inventory', 'surat')->get();
-        return view('kominfo.peminjaman', compact('peminjaman'));
+        
+        
+        $notifications = [];
+        foreach ($peminjaman as $item) {
+        $returnDate = Carbon::parse($item->return_date);
+        $today = Carbon::now();
+
+        // Jika tanggal pengembalian sudah lewat dan status bukan "Returned"
+        if ($returnDate->isPast() && $item->status !== 'Returned') {
+            $notifications[] = "Barang '{$item->inventory->item_name}' telah melewati tenggat pengembalian.";
+        } 
+        // Jika tenggat kurang dari atau sama dengan 3 hari dan status bukan "Returned"
+        elseif ($returnDate->diffInDays($today) <= 3 && $returnDate->isFuture() && $item->status !== 'Returned') {
+            $notifications[] = "Barang '{$item->inventory->item_name}' mendekati tenggat pengembalian ({$returnDate->toFormattedDateString()}).";
+        }
+    }
+        return view('kominfo.peminjaman', compact('peminjaman','notifications'));
     }
 
     public function create()
@@ -189,6 +208,21 @@ class KominfoController extends Controller
         ->get();
         return view('kominfo.peminjaman.return', compact('inventories', 'peminjaman'));
     }
+
+//     public function checkOverdue()
+// {
+//     // Ambil semua peminjaman yang belum dikembalikan dan sudah melewati tenggat waktu
+//     $overduePeminjaman = Peminjaman::where('status', 'Approved')
+//         ->where('return_date', '<', Carbon::now())
+//         ->get();
+
+//     // Kirim notifikasi ke peminjam
+//     foreach ($overduePeminjaman as $peminjaman) {
+//         $peminjaman->notify(new OverdueNotification($peminjaman));
+//     }
+
+//     return response()->json(['message' => 'Notifikasi pengembalian terlambat telah dikirim.']);
+// }
 
     public function destroy(Peminjaman $peminjaman)
     {

@@ -49,10 +49,13 @@
                                 <option value="" disabled selected>Pilih Barang</option>
                                 @foreach ($inventories as $inventory)
                                     <option value="{{ $inventory->id }}" data-requires-letter="{{ $inventory->requires_letter }}">
-                                        {{ $inventory->item_name }} - {{ $inventory->availability_status  }}
+                                        {{ $inventory->item_name }} - {{ $inventory->stock <= 0 ? 'Stok Habis' : $inventory->availability_status  }}
                                     </option>
                                 @endforeach
                             </select>
+                            @if (session('error'))
+                                <p class="text-red-500 text-sm mt-1">{{ session('error') }}</p>
+                            @endif
                         </div>
                 
                         <!-- Pilih Surat (Hanya Jika Diperlukan) -->

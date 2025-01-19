@@ -29,7 +29,7 @@
 
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6 text-bold">Edit Peminjaman </h1>
+                <h1 class="text-3xl text-black pb-6 text-bold">Pengembalian Peminjaman </h1>
                 
                 
 
@@ -68,13 +68,13 @@
                             <option value="Returned" {{ $peminjaman->status == 'Returned' ? 'selected' : '' }}>Returned</option>
                         </select>
                     </div>
-                    <div>
-                        <label for="return_condition">Deskripsi Kondisi Akhir</label>w
-                        <textarea name="return_condition" required></textarea>
+                    <div class="mb-4">
+                        <label for="return_condition" class="block text-sm font-medium text-gray-700">Deskripsi Kondisi Akhir</label>
+                        <textarea name="return_condition" id="return_condition" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Masukkan deskripsi kondisi akhir barang..." required></textarea>
                     </div>
-                    <div>
-                        <label for="comments">Komentar (Opsional)</label>
-                        <textarea name="comments"></textarea>
+                    <div class="mb-4">
+                        <label for="comments" class="block text-sm font-medium text-gray-700">Komentar (Opsional)</label>
+                        <textarea name="comments"id="comments" rows="4" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Tambahkan Komentar jika ada..."></textarea>
                     </div>
             
                     <button type="submit"  class="w-full block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 items-center py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ">Perbarui</button>
