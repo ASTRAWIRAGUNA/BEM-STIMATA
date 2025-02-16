@@ -1,16 +1,14 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+import tailwindcss from 'tailwindcss';
 
-module.exports = {
+export default {
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
   ],
-  theme: {
-    extend: {
+    theme: {
       fontFamily: {
         'inter': ["'Poppins'", 'sans-serif']
       },
     },
-  },
-  plugins: [],
-}
+    plugins: [tailwindcss],
+};
